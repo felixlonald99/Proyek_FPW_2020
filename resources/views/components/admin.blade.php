@@ -131,8 +131,9 @@
         }
         #btnPreview{
             position:absolute;
-            left:71%;
-            top:50.5%;
+            left:30%;
+            top:70.5%;
+            width:20%;
         }
         #loginText{
             position:absolute;
@@ -166,8 +167,12 @@
             document.getElementById("foto").src = link;
         }
     </script>
+    <link rel="stylesheet" href="{{ url("/assets/js/bootstrap.min.js") }}">
+    <link rel="stylesheet" href="{{ url("/assets/css/bootstrap.min.css") }}">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
 </head>
 <body style="margin: 0px;">
+
     <div class="header">
         <div id="Logo"></div>
         <div id="kataAdmin">Admin</div>
@@ -175,45 +180,57 @@
         <div id="pembatas"></div>
     </div>
 
-    <div class="registerBoxTransparent">
-        <form method = "POST" action="{{ url('/tambahPenginapan') }}">
-            @csrf
-            <div id="nama">
-                <input type="text" name="nama" placeholder="Nama Penginapan">
-            </div>
-            @error('nama')
-                <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
-            @enderror
+    <br><br>
+    <div id="container">
+        <div id="row">
+            <div class="col-md-12">
+                <div class="card" style="margin:50px;">
+                    <div class="card-header">
+                        <center><h1>Halaman Admin</h1></center>
+                    </div>
+                    <div class="card-body">
+                        <form method = "POST" action="{{ url('/tambahPenginapan') }}">
+                            @csrf
 
-            <div id="alamat">
-                <input type="text" name="alamat" placeholder="Alamat Penginapan">
-            </div>
-            @error('alamat')
-                <div style="color:red; font-weight:bold;position:absolute;left:70%;top:31%;font-size:14px" > <<< {{$message}}</div>
-            @enderror
+                            Nama Penginapan
+                            <input type="text" class="form-control" name="nama" placeholder="Nama Penginapan">
+                            @error('nama')
+                                <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
+                            @enderror
 
-            <div id="harga">
-                <input type="number" name="harga" placeholder="Harga Penginapan">
-            </div>
+                            <br>
 
-            <div id="link">
-                <input type="text" id="linkk" name="link" placeholder="Link Foto">
-            </div>
-            @error('link')
-                <div style="color:red; font-weight:bold;position:absolute;left:90%;top:51%;font-size:14px" > <<< {{$message}}</div>
-            @enderror
+                            Alamat Penginapan
+                            <input type="text" class="form-control" name="alamat" placeholder="Alamat Penginapan">
+                            @error('alamat')
+                                <div style="color:red; font-weight:bold;position:absolute;left:70%;top:31%;font-size:14px" > <<< {{$message}}</div>
+                            @enderror
 
-            <div id="photoDisplay">
-                <img src="" id="foto" width="200" height="200">
-            </div>
 
-            <div id="btnTambah">
-                <input type="submit" value="Tambah">
-            </div>
-        </form>
+                            <br>
 
-        <div id="btnPreview">
-            <button onclick="preview()">Preview</button>
+                            Harga Penginapan
+                            <input type="number" class="form-control" name="harga" placeholder="Harga Penginapan">
+
+                            <br>
+
+
+                            Link Foto
+                            <input type="text" class="form-control" id="linkk" name="link" placeholder="Link Foto">
+                            @error('link')
+                                <div style="color:red; font-weight:bold;position:absolute;left:90%;top:51%;font-size:14px" > <<< {{$message}}</div>
+                            @enderror
+
+                            <img src="" id="foto" width="200" height="200">
+
+                            <br><br>
+                            <input type="submit" value="Tambah"><br>
+                        </form>
+
+                    </div>
+                    <button onclick="preview()" id="btnPreview">Preview</button>
+                </div>
+            </div>
         </div>
     </div>
 
