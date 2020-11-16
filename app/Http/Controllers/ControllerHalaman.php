@@ -120,16 +120,8 @@ class ControllerHalaman extends Controller
         }
         else if(count($checkUser)>0 && count($checkMultipleLogin)>0){
             DB::table('user')->where('mobilenumber',$mobilenumber)->update(["status"=>1]);
-            $room = DB::table('room')->select('*')->get();
 
-            $user = DB::table('user')->select('*')->where('status',1)->get();
-
-            if(count($user)>0){
-                return view('components.home',['room' => $room,'userLogin'=>$user]);
-            }
-            else{
-                return view('components.home',['room' => $room]);
-            }
+            return redirect('/home');
         }
         else if (count($checkUser)>0 && count($checkMultipleLogin)==0){
             echo
@@ -244,8 +236,6 @@ class ControllerHalaman extends Controller
                 alert('Berhasil book hotel!');
                 window.location.href='http://localhost:8000/detailPage/{$getroom[0]->nama}';
             </script>";
-
-
         }
     }
 }
