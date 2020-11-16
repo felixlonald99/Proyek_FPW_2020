@@ -112,7 +112,7 @@ class ControllerHalaman extends Controller
         $checkUser = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->get();
         $checkMultipleLogin = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->where('status',0)->get();
 
-        if($mobilenumber==888 && $password==888){
+        if($mobilenumber=="admin" && $password=="admin"){
             echo
             "<script>
                 window.location.href='http://localhost:8000/admin';
