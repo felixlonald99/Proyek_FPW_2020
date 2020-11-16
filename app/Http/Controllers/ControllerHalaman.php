@@ -236,8 +236,6 @@ class ControllerHalaman extends Controller
                 alert('Berhasil book hotel!');
                 window.location.href='http://localhost:8000/detailPage/{$getroom[0]->nama}';
             </script>";
-
-
         }
     }
 }
