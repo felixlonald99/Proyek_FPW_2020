@@ -40,7 +40,7 @@ class ControllerHalaman extends Controller
         $user = DB::table('user')->select('*')->where('status',1)->get();
 
         $history = DB::table('history')->select('*')->where('user',$user[0]->nama)->get();
-        return view('components.profile',['user' => $user,'history'=>$history]);
+        return view('components.profile',['userLogin' => $user,'history'=>$history]);
     }
 
     function logout(){

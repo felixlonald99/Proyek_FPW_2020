@@ -125,8 +125,8 @@
     }
     #btnTopup{
         position:absolute;
-        left:27%;
-        top:124%;
+        left:12%;
+        top:105%;
         margin-bottom: 50px;
     }
     #pembatas{
@@ -163,8 +163,8 @@
     <div id="boxHotel">
         <div id="profileTitle">Profile Info</div>
         <div id="pembatas"></div>
-        @isset($user)
-            @foreach ($user as $users)
+        @isset($userLogin)
+            @foreach ($userLogin as $users)
                 <div id="profileName">Name : {{$users->nama}}</div>
                 <div id="profileEmail">Email : {{$users->email}}</div>
                 <div id="profileMobilenumber">Mobile Number : {{$users->mobilenumber}}</div>

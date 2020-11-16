@@ -192,16 +192,16 @@
                         <form method = "POST" action="{{ url('/tambahPenginapan') }}">
                             @csrf
 
-                            Nama Penginapan
-                            <input type="text" class="form-control" name="nama" placeholder="Nama Penginapan">
+                            Tipe Kamar
+                            <input type="text" class="form-control" name="tipe" placeholder="Tipe Kamar">
                             @error('nama')
                                 <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
                             @enderror
 
                             <br>
 
-                            Alamat Penginapan
-                            <input type="text" class="form-control" name="alamat" placeholder="Alamat Penginapan">
+                            Harga Kamar
+                            <input type="text" class="form-control" name="harga" placeholder="Harga Kamar">
                             @error('alamat')
                                 <div style="color:red; font-weight:bold;position:absolute;left:70%;top:31%;font-size:14px" > <<< {{$message}}</div>
                             @enderror
@@ -209,26 +209,19 @@
 
                             <br>
 
-                            Harga Penginapan
-                            <input type="number" class="form-control" name="harga" placeholder="Harga Penginapan">
+                            Info Kamar
+                            <input type="number" class="form-control" name="info" placeholder="Info Kamar">
 
                             <br>
-
-
-                            Link Foto
-                            <input type="text" class="form-control" id="linkk" name="link" placeholder="Link Foto">
-                            @error('link')
-                                <div style="color:red; font-weight:bold;position:absolute;left:90%;top:51%;font-size:14px" > <<< {{$message}}</div>
-                            @enderror
-
-                            <img src="" id="foto" width="200" height="200">
+                            <br>
+                            <img src="" id="foto" width="200" height="200"><br><br>
+                            <input type="file" id="img" name="img" accept="image/*">
 
                             <br><br>
                             <input type="submit" value="Tambah"><br>
                         </form>
 
                     </div>
-                    <button onclick="preview()" id="btnPreview">Preview</button>
                 </div>
             </div>
         </div>
