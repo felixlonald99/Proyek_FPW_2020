@@ -125,8 +125,8 @@
     }
     #btnTopup{
         position:absolute;
-        left:27%;
-        top:124%;
+        left:12%;
+        top:105%;
         margin-bottom: 50px;
     }
     #pembatas{
