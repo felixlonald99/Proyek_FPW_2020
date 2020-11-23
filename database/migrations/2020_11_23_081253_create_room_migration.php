@@ -13,7 +13,7 @@ class CreateRoomMigration extends Migration
      */
     public function up()
     {
-        Schema::create('room_migration', function (Blueprint $table) {
+        Schema::create('room', function (Blueprint $table) {
             $table->integer('room_number')->primary();
             $table->foreignId('roomtype_id');
         });

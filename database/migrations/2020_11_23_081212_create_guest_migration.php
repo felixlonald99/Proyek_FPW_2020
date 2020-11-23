@@ -13,12 +13,12 @@ class CreateGuestMigration extends Migration
      */
     public function up()
     {
-        Schema::create('guest_migration', function (Blueprint $table) {
+        Schema::create('guest', function (Blueprint $table) {
             $table->string('name');
             $table->string('email')->unique()->primary();
             $table->string('phone');
-            //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('status');
             $table->timestamps();
         });
     }

@@ -85,7 +85,7 @@
             left:33%;
             top:20%;
         }
-        #mobileNumberInput{
+        #phoneInput{
             position:absolute;
             left:33%;
             top:30%;
@@ -159,10 +159,10 @@
             <div style="color:red; font-weight:bold;position:absolute;left:77%;top:41%;font-size:14px;width:200px;" > <<< {{$message}}</div>
         @enderror
 
-        <div id="mobileNumberInput">
-            <input type="text" name="mobilenumber" placeholder="Mobile Number"   >
+        <div id="phoneInput">
+            <input type="text" name="phone" placeholder="Phone"   >
         </div>
-        @error('mobilenumber')
+        @error('phone')
             <div style="color:red; font-weight:bold;position:absolute;left:77%;top:32%;font-size:14px;width:200px;" > <<< {{$message}}</div>
         @enderror
 

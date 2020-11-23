@@ -13,7 +13,7 @@ class CreateBookingMigration extends Migration
      */
     public function up()
     {
-        Schema::create('booking_migration', function (Blueprint $table) {
+        Schema::create('booking', function (Blueprint $table) {
             $table->integer('booking_number')->primary();
             $table->datetime('booking_date');
             $table->string('guest_email');
@@ -24,7 +24,6 @@ class CreateBookingMigration extends Migration
             $table->date('check_in');
             $table->date('check_out');
             $table->integer('invoice_number');
-            $table->integer('total_price');
             $table->integer('total_price');
             $table->integer('booking_status');
             $table->integer('payment_status');

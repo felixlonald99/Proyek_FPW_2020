@@ -21,6 +21,8 @@ Route::get('/admin','ControllerHalaman@adminPage');
 Route::get('/profile','ControllerHalaman@profilePage');
 Route::get('/logout','ControllerHalaman@logout');
 
+
+Route::post('/changePassword','ControllerHalaman@changePassword');
 Route::post('/prosesRegister','ControllerHalaman@prosesRegister');
 Route::post('/prosesLogin','ControllerHalaman@prosesLogin');
 Route::post('/tambahPenginapan','ControllerHalaman@tambahPenginapan');

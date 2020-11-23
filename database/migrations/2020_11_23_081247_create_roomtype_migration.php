@@ -13,7 +13,7 @@ class CreateRoomtypeMigration extends Migration
      */
     public function up()
     {
-        Schema::create('roomtype_migration', function (Blueprint $table) {
+        Schema::create('roomtype', function (Blueprint $table) {
             $table->increments('roomtype_id');
             $table->string('name');
             $table->integer('roomtype_capacity');

@@ -13,7 +13,7 @@ class CreateFacilityMigration extends Migration
      */
     public function up()
     {
-        Schema::create('facility_migration', function (Blueprint $table) {
+        Schema::create('facility', function (Blueprint $table) {
             $table->increments('facility_id');
             $table->string('facility_name');
             $table->foreignId('room_id');

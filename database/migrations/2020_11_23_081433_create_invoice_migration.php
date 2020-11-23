@@ -13,7 +13,7 @@ class CreateInvoiceMigration extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_migration', function (Blueprint $table) {
+        Schema::create('invoice', function (Blueprint $table) {
             $table->integer('invoice_number')->primary();
             $table->integer('booking_number');
             $table->integer('total_price');

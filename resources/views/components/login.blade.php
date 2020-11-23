@@ -50,7 +50,7 @@
         #derawanAdventures:hover{
             text-shadow: 0px -2px 0px #000000, 0 0 0px rgba(255, 255, 255, 0.8), 0 -4px 15px rgba(255, 255, 255, 0.5);
         }
-        #mobilenumberInput{
+        #phoneInput{
             position:absolute;
             left:33%;
             top:30%;
@@ -117,7 +117,7 @@
 
     <form method = "POST" action="{{ url('/prosesLogin') }}">
         @csrf
-        <div id="mobilenumberInput"><input type="text" name="mobilenumber" placeholder="Mobile Number"  ></div>
+        <div id="phoneInput"><input type="text" name="phone" placeholder="Phone"  ></div>
         <div id="passwordInput"><input type="password" name="password" placeholder="Password"  ></div>
         <div id="btnLogin"><input type="submit" value="Login"></div>
     </form>

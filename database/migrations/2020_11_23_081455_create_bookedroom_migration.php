@@ -13,7 +13,7 @@ class CreateBookedroomMigration extends Migration
      */
     public function up()
     {
-        Schema::create('bookedroom_migration', function (Blueprint $table) {
+        Schema::create('bookedroom', function (Blueprint $table) {
             $table->integer('booking_number');
             $table->string('guest_email');
             $table->string('guest_name');

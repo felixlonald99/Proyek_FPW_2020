@@ -7,7 +7,7 @@
 <style>
     #boxHotel{
         width: 1050px;
-        height: 550px;
+        height: 700px;
         border: 2px solid #ccc;
         margin-bottom: 50px;
         -webkit-transition: 0.5s ease;
@@ -71,7 +71,7 @@
     #profileName{
         position: absolute;
         left:200px;
-        top:450px;
+        top:400px;
         width: 600px;
         height: 50px;
         font-size:20px;
@@ -82,7 +82,7 @@
     #profileEmail{
         position: absolute;
         left:200px;
-        top:500px;
+        top:450px;
         width: 600px;
         height: 50px;
         font-size:20px;
@@ -93,7 +93,7 @@
     #profileMobilenumber{
         position: absolute;
         left:200px;
-        top:550px;
+        top:500px;
         width: 600px;
         height: 50px;
         font-size:20px;
@@ -123,18 +123,12 @@
         color:white;
         font-family: 'Roboto', sans-serif;
     }
-    #btnTopup{
-        position:absolute;
-        left:12%;
-        top:105%;
-        margin-bottom: 50px;
-    }
     #pembatas{
         position: absolute;
         left: 650px;
         top:350px;
         width:1px;
-        height: 450px;
+        height: 600px;
         background-color: white;
     }
     #historyTitle{
@@ -156,6 +150,28 @@
         text-align: center;
         background-color: tomato;
     }
+    #changePasswordTitle{
+        position: absolute;
+        top:580px;
+        left:275px;
+        font-size:30px;
+        font-weight:bold;
+        color:white;
+        font-family: 'Roboto', sans-serif;
+    }
+    input[type=password], select {
+        width: 30%;
+        padding: 10px 10px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size:16px;
+    }
+    #btnSave{
+        position:absolute;
+        left:25%;
+        top:140%;
+        margin-bottom: 50px;
+    }
 </style>
 
 <div class="container" style="margin-top:150px;margin-left:130px;color:white;font-weight:100;">
@@ -163,44 +179,29 @@
     <div id="boxHotel">
         <div id="profileTitle">Profile Info</div>
         <div id="pembatas"></div>
-        @isset($userLogin)
-            @foreach ($userLogin as $users)
-                <div id="profileName">Name : {{$users->nama}}</div>
-                <div id="profileEmail">Email : {{$users->email}}</div>
-                <div id="profileMobilenumber">Mobile Number : {{$users->mobilenumber}}</div>
-                <div id="profileSaldo">Balance : IDR.{{$users->saldo}}</div>
+        @isset($guestLogin)
+            @foreach ($guestLogin as $guest)
+                <div id="profileName">Name : {{$guest->name}}</div>
+                <div id="profileEmail">Email : {{$guest->email}}</div>
+                <div id="profileMobilenumber">Phone : {{$guest->phone}}</div>
             @endforeach
         @endisset
 
-        <form method = "POST" action="{{ url('/topup') }}">
+        <div id="changePasswordTitle">Change Password</div>
+        <form method = "POST" action="{{ url('/changePassword') }}">
             @csrf
-            <div id="profiletopUp">Topup : <input type="number" name="nominal" placeholder="Nominal"></div>
-            <div id="btnTopup"><input type="submit" value="Topup"></div>
+            <input type="password" name="old" placeholder="Old Password" style="position:absolute;top:660px;left:200px;" ></div>
+            @error('old')
+                <div style="color:red; font-weight:bold; position: absolute;top:670px;left:205px;width:380px;text-align:right;" >  {{$message}}</div>
+            @enderror
+            <input type="password" name="new" placeholder="New Password" style="position:absolute;top:720px;left:200px;"></div>
+            @error('new')
+            <div style="color:red; font-weight:bold; position: absolute;top:730px;left:205px;width:380px;text-align:right;" >  {{$message}}</div>
+            @enderror
+            <input type="password" name="confirm" placeholder="Confirm New Password"  style="position:absolute;top:780px;left:200px;"></div>
+            <div id="btnSave"><input type="submit" value="Save"></div>
         </form>
 
-        <div id="historyTitle">History</div>
-        <div class="history">
-            <table border="1px" id="history">
-                <tr>
-                    <th>Booking Code</th>
-                    <th>Room Type</th>
-                    <th>Check-In</th>
-                    <th>Check-Out</th>
-                    <th>Subtotal</th>
-                </tr>
-                @foreach ($history as $key)
-                    <tr>
-                        <td><img src="{{$key->link}}" width="50" height="50"></td>
-                        <td>{{$key->penginapan}}</td>
-                        <td>{{$key->harga}}</td>
-                        <td>{{$key->hari}}</td>
-                        <td>{{$key->total}}</td>
-                        <td><button style="width: 100px;
-                            height: 30px;font-size:16px;"><a href="detailPage/{{$key->penginapan}}">Detail</a></button></td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
     </div>
 </div>
 @endsection

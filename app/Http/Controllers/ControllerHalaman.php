@@ -38,11 +38,64 @@ class ControllerHalaman extends Controller
 
     }
 
+    function changePassword(Request $request){
+        $rules = [
+            'old' => 'required',
+            'new' => ['required','min:8','max:12','confirmed', new cekPassword]
+        ];
+
+        $customError = [
+            'required' => 'Harus di isi ! '
+        ];
+
+        $this->validate($request,$rules,$customError);
+
+        $old = $request->input('old');
+        $new = $request->input('new');
+        $confirm = $request->input('confirm');
+
+        $cekOld = DB::table('guest')->select('*')->where('status',1)->where('password',$old)->get();
+
+        if(count($cekOld)>0){
+            if($new!=$old){
+                if($new==$confirm){
+                    DB::table('guest')->where('status',1)->update(["password"=>$new]);
+
+                    echo
+                    "<script>
+                        alert('Berhasil ganti password')
+                        window.location.href='http://localhost:8000/profile';
+                    </script>";
+                }
+                else{
+                    echo
+                    "<script>
+                        alert('Berhasil ganti password')
+                        window.location.href='http://localhost:8000/profile';
+                    </script>";
+                }
+            }
+            else{
+                echo
+                "<script>
+                    alert('Password baru tidak boleh sama dengan password lama!')
+                    window.location.href='http://localhost:8000/profile';
+                </script>";
+            }
+        }
+        else{
+            echo
+            "<script>
+                alert('Password lama salah!')
+                window.location.href='http://localhost:8000/profile';
+            </script>";
+        }
+
+    }
+
     function profilePage(){
         $guest = DB::table('guest')->select('*')->where('status',1)->get();
-
-        $history = DB::table('history')->select('*')->where('guest',$guest[0]->nama)->get();
-        return view('components.profile',['guestLogin' => $guest,'history'=>$history]);
+        return view('components.profile',['guestLogin' => $guest]);
     }
 
     function logout(){
@@ -66,7 +119,7 @@ class ControllerHalaman extends Controller
     function prosesRegister(Request $request){
         $rules = [
             'fullname' => 'required | max:24',
-            'mobilenumber' => 'required | numeric | max:13',
+            'phone' => 'required | min:10',
             'password' => ['required','min:8','max:12','confirmed', new cekPassword],
             'email' => ['required', new cekEmail],
         ];
@@ -81,19 +134,18 @@ class ControllerHalaman extends Controller
 
         $nama = $request->input('fullname');
         $email = $request->input('email');
-        $mobilenumber = $request->input('mobilenumber');
+        $phone = $request->input('phone');
         $password = $request->input('password');
 
         $checkEmail = DB::table('guest')->select('*')->where('email',$email)->get();
-        $checkMobilenumber = DB::table('guest')->select('*')->where('mobilenumber',$mobilenumber)->get();
+        $checkphone = DB::table('guest')->select('*')->where('phone',$phone)->get();
 
-        if(count($checkEmail)==0 && count($checkMobilenumber)==0){
+        if(count($checkEmail)==0 && count($checkphone)==0){
             $data = [
-                'nama' => $nama,
+                'name' => $nama,
                 'email' => $email,
-                'mobilenumber' => $mobilenumber,
+                'phone' => $phone,
                 'password' => $password,
-                'saldo' => 0,
                 'status' => 0
             ];
             DB::table('guest')->insert($data);
@@ -102,26 +154,26 @@ class ControllerHalaman extends Controller
         else if(count($checkEmail)>0){
             return view('components.register',['errorEmail' => "Email sudah digunakan!"]);
         }
-        else if(count($checkMobilenumber)>0){
+        else if(count($checkphone)>0){
             return view('components.register',['errorNoHP' => "Nomor HP sudah digunakan!"]);
         }
     }
 
     function prosesLogin(Request $request){
-        $mobilenumber = $request->input('mobilenumber');
+        $phone = $request->input('phone');
         $password = $request->input('password');
 
-        $checkguest = DB::table('guest')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->get();
-        $checkMultipleLogin = DB::table('guest')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->where('status',0)->get();
+        $checkguest = DB::table('guest')->select('*')->where('phone',$phone)->where('password',$password)->get();
+        $checkMultipleLogin = DB::table('guest')->select('*')->where('phone',$phone)->where('password',$password)->where('status',0)->get();
 
-        if($mobilenumber=="admin" && $password=="admin"){
+        if($phone=="admin" && $password=="admin"){
             echo
             "<script>
                 window.location.href='http://localhost:8000/admin';
             </script>";
         }
         else if(count($checkguest)>0 && count($checkMultipleLogin)>0){
-            DB::table('guest')->where('mobilenumber',$mobilenumber)->update(["status"=>1]);
+            DB::table('guest')->where('phone',$phone)->update(["status"=>1]);
 
             return redirect('/home');
         }
