@@ -58,22 +58,7 @@ class ControllerHalaman extends Controller
 
         if(count($cekOld)>0){
             if($new!=$old){
-                if($new==$confirm){
-                    DB::table('guest')->where('status',1)->update(["password"=>$new]);
-
-                    echo
-                    "<script>
-                        alert('Berhasil ganti password')
-                        window.location.href='http://localhost:8000/profile';
-                    </script>";
-                }
-                else{
-                    echo
-                    "<script>
-                        alert('Berhasil ganti password')
-                        window.location.href='http://localhost:8000/profile';
-                    </script>";
-                }
+                DB::table('guest')->where('status',1)->update(["password"=>$new]);
             }
             else{
                 echo
