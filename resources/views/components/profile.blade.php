@@ -202,6 +202,23 @@
             <div id="btnSave"><input type="submit" value="Save"></div>
         </form>
 
+        <div id="historyTitle">History</div>
+        <div class="history">
+            <table border="1px" id="history">
+                <tr>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Room Type</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Total</th>
+                </tr>
+                @foreach ($history as $key)
+                    <tr>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
     </div>
 </div>
 @endsection
