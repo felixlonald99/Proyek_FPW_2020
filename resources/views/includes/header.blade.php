@@ -66,7 +66,7 @@
 
 <div class="header">
     <div id="Logo"></div>
-    @if(isset($userLogin))
+    @if(isset($guestLogin))
         <div id="buttonLogout"><a href="http://localhost:8000/logout"><button>Logout</button></a></div>
         <div id="buttonProfile"><a href="http://localhost:8000/profile"><button>Profile</button></a></div>
         <div id="buttonHome"><a href="http://localhost:8000/home"><button>Home</button></a></div>

@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Cookie;
 use App\Rules\cekEmail;
 use App\Rules\cekPassword;
 use Illuminate\Support\Facades\DB;
-
+use App\Account;
+use App\Room;
+use App\RoomType;
+use App\Guest;
 
 class ControllerHalaman extends Controller
 {
@@ -24,27 +27,64 @@ class ControllerHalaman extends Controller
     }
 
     function homePage(){
-        $user = DB::table('user')->select('*')->where('status',1)->get();
-        $room = DB::table('room')->select('*')->get();
+        $guest = DB::table('guest')->select('*')->where('status',1)->get();
 
-        if(count($user)>0){
-            return view('components.home',['room' => $room,'userLogin'=>$user]);
+        if(count($guest)>0){
+            return view('components.home',['guestLogin'=>$guest]);
         }
         else{
-            return view('components.home',['room' => $room]);
+            return view('components.home');
+        }
+
+    }
+
+    function changePassword(Request $request){
+        $rules = [
+            'old' => 'required',
+            'new' => ['required','min:8','max:12','confirmed', new cekPassword]
+        ];
+
+        $customError = [
+            'required' => 'Harus di isi ! '
+        ];
+
+        $this->validate($request,$rules,$customError);
+
+        $old = $request->input('old');
+        $new = $request->input('new');
+        $confirm = $request->input('confirm');
+
+        $cekOld = DB::table('guest')->select('*')->where('status',1)->where('password',$old)->get();
+
+        if(count($cekOld)>0){
+            if($new!=$old){
+                DB::table('guest')->where('status',1)->update(["password"=>$new]);
+            }
+            else{
+                echo
+                "<script>
+                    alert('Password baru tidak boleh sama dengan password lama!')
+                    window.location.href='http://localhost:8000/profile';
+                </script>";
+            }
+        }
+        else{
+            echo
+            "<script>
+                alert('Password lama salah!')
+                window.location.href='http://localhost:8000/profile';
+            </script>";
         }
 
     }
 
     function profilePage(){
-        $user = DB::table('user')->select('*')->where('status',1)->get();
-
-        $history = DB::table('history')->select('*')->where('user',$user[0]->nama)->get();
-        return view('components.profile',['userLogin' => $user,'history'=>$history]);
+        $guest = DB::table('guest')->select('*')->where('status',1)->get();
+        return view('components.profile',['guestLogin' => $guest]);
     }
 
     function logout(){
-        DB::table('user')->where('status',1)->update(["status"=>0]);
+        DB::table('guest')->where('status',1)->update(["status"=>0]);
         echo
             "<script>
                 window.location.href='http://localhost:8000/home';
@@ -64,7 +104,7 @@ class ControllerHalaman extends Controller
     function prosesRegister(Request $request){
         $rules = [
             'fullname' => 'required | max:24',
-            'mobilenumber' => 'required | numeric',
+            'phone' => 'required | min:10',
             'password' => ['required','min:8','max:12','confirmed', new cekPassword],
             'email' => ['required', new cekEmail],
         ];
@@ -79,51 +119,50 @@ class ControllerHalaman extends Controller
 
         $nama = $request->input('fullname');
         $email = $request->input('email');
-        $mobilenumber = $request->input('mobilenumber');
+        $phone = $request->input('phone');
         $password = $request->input('password');
 
-        $checkEmail = DB::table('user')->select('*')->where('email',$email)->get();
-        $checkMobilenumber = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->get();
+        $checkEmail = DB::table('guest')->select('*')->where('email',$email)->get();
+        $checkphone = DB::table('guest')->select('*')->where('phone',$phone)->get();
 
-        if(count($checkEmail)==0 && count($checkMobilenumber)==0){
+        if(count($checkEmail)==0 && count($checkphone)==0){
             $data = [
-                'nama' => $nama,
+                'name' => $nama,
                 'email' => $email,
-                'mobilenumber' => $mobilenumber,
+                'phone' => $phone,
                 'password' => $password,
-                'saldo' => 0,
                 'status' => 0
             ];
-            DB::table('user')->insert($data);
+            DB::table('guest')->insert($data);
             return view('components.login');
         }
         else if(count($checkEmail)>0){
             return view('components.register',['errorEmail' => "Email sudah digunakan!"]);
         }
-        else if(count($checkMobilenumber)>0){
+        else if(count($checkphone)>0){
             return view('components.register',['errorNoHP' => "Nomor HP sudah digunakan!"]);
         }
     }
 
     function prosesLogin(Request $request){
-        $mobilenumber = $request->input('mobilenumber');
+        $phone = $request->input('phone');
         $password = $request->input('password');
 
-        $checkUser = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->get();
-        $checkMultipleLogin = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->where('status',0)->get();
+        $checkguest = DB::table('guest')->select('*')->where('phone',$phone)->where('password',$password)->get();
+        $checkMultipleLogin = DB::table('guest')->select('*')->where('phone',$phone)->where('password',$password)->where('status',0)->get();
 
-        if($mobilenumber=="admin" && $password=="admin"){
+        if($phone=="admin" && $password=="admin"){
             echo
             "<script>
                 window.location.href='http://localhost:8000/admin';
             </script>";
         }
-        else if(count($checkUser)>0 && count($checkMultipleLogin)>0){
-            DB::table('user')->where('mobilenumber',$mobilenumber)->update(["status"=>1]);
+        else if(count($checkguest)>0 && count($checkMultipleLogin)>0){
+            DB::table('guest')->where('phone',$phone)->update(["status"=>1]);
 
             return redirect('/home');
         }
-        else if (count($checkUser)>0 && count($checkMultipleLogin)==0){
+        else if (count($checkguest)>0 && count($checkMultipleLogin)==0){
             echo
             "<script>
                 alert('Akun ini sudah login!');
@@ -170,9 +209,9 @@ class ControllerHalaman extends Controller
     }
 
     function topup(Request $request){
-        $getUser = DB::table('user')->select('*')->where('status',1)->get();
+        $getguest = DB::table('guest')->select('*')->where('status',1)->get();
         $nominal = $request->input('nominal');
-        $total = $getUser[0]->saldo + $nominal;
+        $total = $getguest[0]->saldo + $nominal;
 
         if($nominal%100000!=0){
             echo
@@ -182,7 +221,7 @@ class ControllerHalaman extends Controller
             </script>";
         }
         else{
-            DB::table('user')->where('status',1)->update(["saldo"=>$total]);
+            DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
             echo
             "<script>
                 alert('Berhasil topup');
@@ -192,7 +231,7 @@ class ControllerHalaman extends Controller
     }
 
     function book(Request $request){
-        $getUser = DB::table('user')->select('*')->where('status',1)->get();
+        $getguest = DB::table('guest')->select('*')->where('status',1)->get();
         $room = $request->input('room');
         $getroom = DB::table('room')->select('*')->where('nama',$room)->get();
 
@@ -210,7 +249,7 @@ class ControllerHalaman extends Controller
         $jumlahHari = ((int)$subEndMonth - (int)$subStartMonth)*30+$subEndDay-$subStartDay;
         $harga = $jumlahHari*$getroom[0]->harga;
 
-        if($getUser[0]->saldo - $harga <0){
+        if($getguest[0]->saldo - $harga <0){
             echo
             "<script>
                 alert('Saldo anda tidak cukup!');
@@ -218,12 +257,12 @@ class ControllerHalaman extends Controller
             </script>";
         }
         else{
-            $total = $getUser[0]->saldo - $harga;
-            DB::table('user')->where('status',1)->update(["saldo"=>$total]);
+            $total = $getguest[0]->saldo - $harga;
+            DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
 
             $data = [
                 'room' => $getroom[0]->nama,
-                'user' => $getUser[0]->nama,
+                'guest' => $getguest[0]->nama,
                 'harga' => $getroom[0]->harga,
                 'link' => $getroom[0]->link,
                 'hari' => $jumlahHari,
@@ -238,4 +277,30 @@ class ControllerHalaman extends Controller
             </script>";
         }
     }
+
+    function tambahPenginapan(Request $request){
+        $rules = [
+            'tipe' => 'required ',
+            'harga' => 'required',
+            'info' => 'required',
+        ];
+        $customError = [
+            'required' => 'Harus di isi ! '
+        ];
+
+        $this->validate($request,$rules,$customError);
+
+        $tipe = $request->input('tipe');
+        $harga = $request->input('harga');
+        $detail = $request->input('info');
+        $room = new RoomType;
+        // $room->id = 1;
+        $room->tipe_kamar = $tipe;
+        $room->harga_kamar = $harga;
+        $room->foto_kamar = "";
+        $room->detail_kamar = $detail;
+        $room->save();
+        return view('components.admin');
+    }
+
 }
