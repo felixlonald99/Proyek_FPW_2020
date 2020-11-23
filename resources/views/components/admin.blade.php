@@ -118,11 +118,6 @@
             left:30%;
             top:40%;
         }
-        #link{
-            position:absolute;
-            left:30%;
-            top:50%;
-        }
         #btnTambah{
             position:absolute;
             left:41%;
@@ -192,13 +187,8 @@
                         <form method = "POST" action="{{ url('/tambahPenginapan') }}">
                             @csrf
 
-<<<<<<< HEAD
-                            Nama Tipe Kamar:
-                            <input type="text" class="form-control" name="nama" placeholder="Nama Penginapan">
-=======
                             Tipe Kamar
                             <input type="text" class="form-control" name="tipe" placeholder="Tipe Kamar">
->>>>>>> 9e071b799c1f1d8b94ba185073b79281a4ec01d6
                             @error('nama')
                                 <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
                             @enderror
@@ -219,12 +209,19 @@
 
                             <br>
                             <br>
+                            <div id="link">
+                                <input type="text" id="linkk" name="link" placeholder="Link Foto">
+                            </div>
+                            <br>
                             <img src="" id="foto" width="200" height="200"><br><br>
-                            <input type="file" id="img" name="img" accept="image/*">
 
                             <br><br>
                             <input type="submit" value="Tambah"><br>
                         </form>
+
+                        <div id="btnPreview">
+                            <button onclick="preview()">Preview</button>
+                        </div>
 
                     </div>
                 </div>
@@ -234,3 +231,11 @@
 
 </body>
 </html>
+
+<script>
+    function preview()
+    {
+        var link = document.getElementById("linkk").value;
+        document.getElementById("foto").src = link;
+    }
+</script>

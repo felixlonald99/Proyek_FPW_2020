@@ -17,7 +17,6 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('tipe_kamar');
             $table->tinyInteger('status');
-            $table->timestamps();
         });
     }
 

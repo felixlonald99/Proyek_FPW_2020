@@ -19,7 +19,6 @@ class CreateRoomTypeTable extends Migration
             $table->integer('harga_kamar');
             $table->string('foto_kamar');
             $table->string('detail_kamar');
-            $table->timestamps();
         });
     }
 

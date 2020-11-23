@@ -20,7 +20,6 @@ class CreateGuestTable extends Migration
             $table->string('password');
             $table->integer('saldo');
             $table->integer('status');
-            $table->timestamps();
         });
     }
 

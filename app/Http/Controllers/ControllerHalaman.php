@@ -24,27 +24,26 @@ class ControllerHalaman extends Controller
     }
 
     function homePage(){
-        $user = DB::table('user')->select('*')->where('status',1)->get();
-        $room = DB::table('room')->select('*')->get();
+        $guest = DB::table('guest')->select('*')->where('status',1)->get();
 
-        if(count($user)>0){
-            return view('components.home',['room' => $room,'userLogin'=>$user]);
+        if(count($guest)>0){
+            return view('components.home',['guestLogin'=>$guest]);
         }
         else{
-            return view('components.home',['room' => $room]);
+            return view('components.home');
         }
 
     }
 
     function profilePage(){
-        $user = DB::table('user')->select('*')->where('status',1)->get();
+        $guest = DB::table('guest')->select('*')->where('status',1)->get();
 
-        $history = DB::table('history')->select('*')->where('user',$user[0]->nama)->get();
-        return view('components.profile',['userLogin' => $user,'history'=>$history]);
+        $history = DB::table('history')->select('*')->where('guest',$guest[0]->nama)->get();
+        return view('components.profile',['guestLogin' => $guest,'history'=>$history]);
     }
 
     function logout(){
-        DB::table('user')->where('status',1)->update(["status"=>0]);
+        DB::table('guest')->where('status',1)->update(["status"=>0]);
         echo
             "<script>
                 window.location.href='http://localhost:8000/home';
@@ -64,7 +63,7 @@ class ControllerHalaman extends Controller
     function prosesRegister(Request $request){
         $rules = [
             'fullname' => 'required | max:24',
-            'mobilenumber' => 'required | numeric',
+            'mobilenumber' => 'required | numeric | max:13',
             'password' => ['required','min:8','max:12','confirmed', new cekPassword],
             'email' => ['required', new cekEmail],
         ];
@@ -82,8 +81,8 @@ class ControllerHalaman extends Controller
         $mobilenumber = $request->input('mobilenumber');
         $password = $request->input('password');
 
-        $checkEmail = DB::table('user')->select('*')->where('email',$email)->get();
-        $checkMobilenumber = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->get();
+        $checkEmail = DB::table('guest')->select('*')->where('email',$email)->get();
+        $checkMobilenumber = DB::table('guest')->select('*')->where('mobilenumber',$mobilenumber)->get();
 
         if(count($checkEmail)==0 && count($checkMobilenumber)==0){
             $data = [
@@ -94,7 +93,7 @@ class ControllerHalaman extends Controller
                 'saldo' => 0,
                 'status' => 0
             ];
-            DB::table('user')->insert($data);
+            DB::table('guest')->insert($data);
             return view('components.login');
         }
         else if(count($checkEmail)>0){
@@ -109,8 +108,8 @@ class ControllerHalaman extends Controller
         $mobilenumber = $request->input('mobilenumber');
         $password = $request->input('password');
 
-        $checkUser = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->get();
-        $checkMultipleLogin = DB::table('user')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->where('status',0)->get();
+        $checkguest = DB::table('guest')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->get();
+        $checkMultipleLogin = DB::table('guest')->select('*')->where('mobilenumber',$mobilenumber)->where('password',$password)->where('status',0)->get();
 
         if($mobilenumber=="admin" && $password=="admin"){
             echo
@@ -118,12 +117,12 @@ class ControllerHalaman extends Controller
                 window.location.href='http://localhost:8000/admin';
             </script>";
         }
-        else if(count($checkUser)>0 && count($checkMultipleLogin)>0){
-            DB::table('user')->where('mobilenumber',$mobilenumber)->update(["status"=>1]);
+        else if(count($checkguest)>0 && count($checkMultipleLogin)>0){
+            DB::table('guest')->where('mobilenumber',$mobilenumber)->update(["status"=>1]);
 
             return redirect('/home');
         }
-        else if (count($checkUser)>0 && count($checkMultipleLogin)==0){
+        else if (count($checkguest)>0 && count($checkMultipleLogin)==0){
             echo
             "<script>
                 alert('Akun ini sudah login!');
@@ -170,9 +169,9 @@ class ControllerHalaman extends Controller
     }
 
     function topup(Request $request){
-        $getUser = DB::table('user')->select('*')->where('status',1)->get();
+        $getguest = DB::table('guest')->select('*')->where('status',1)->get();
         $nominal = $request->input('nominal');
-        $total = $getUser[0]->saldo + $nominal;
+        $total = $getguest[0]->saldo + $nominal;
 
         if($nominal%100000!=0){
             echo
@@ -182,7 +181,7 @@ class ControllerHalaman extends Controller
             </script>";
         }
         else{
-            DB::table('user')->where('status',1)->update(["saldo"=>$total]);
+            DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
             echo
             "<script>
                 alert('Berhasil topup');
@@ -192,7 +191,7 @@ class ControllerHalaman extends Controller
     }
 
     function book(Request $request){
-        $getUser = DB::table('user')->select('*')->where('status',1)->get();
+        $getguest = DB::table('guest')->select('*')->where('status',1)->get();
         $room = $request->input('room');
         $getroom = DB::table('room')->select('*')->where('nama',$room)->get();
 
@@ -210,7 +209,7 @@ class ControllerHalaman extends Controller
         $jumlahHari = ((int)$subEndMonth - (int)$subStartMonth)*30+$subEndDay-$subStartDay;
         $harga = $jumlahHari*$getroom[0]->harga;
 
-        if($getUser[0]->saldo - $harga <0){
+        if($getguest[0]->saldo - $harga <0){
             echo
             "<script>
                 alert('Saldo anda tidak cukup!');
@@ -218,12 +217,12 @@ class ControllerHalaman extends Controller
             </script>";
         }
         else{
-            $total = $getUser[0]->saldo - $harga;
-            DB::table('user')->where('status',1)->update(["saldo"=>$total]);
+            $total = $getguest[0]->saldo - $harga;
+            DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
 
             $data = [
                 'room' => $getroom[0]->nama,
-                'user' => $getUser[0]->nama,
+                'guest' => $getguest[0]->nama,
                 'harga' => $getroom[0]->harga,
                 'link' => $getroom[0]->link,
                 'hari' => $jumlahHari,
