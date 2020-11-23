@@ -191,41 +191,33 @@
                     <div class="card-body">
                         <form method = "POST" action="{{ url('/tambahPenginapan') }}">
                             @csrf
-
-<<<<<<< HEAD
-                            Nama Tipe Kamar:
-                            <input type="text" class="form-control" name="nama" placeholder="Nama Penginapan">
-=======
                             Tipe Kamar
                             <input type="text" class="form-control" name="tipe" placeholder="Tipe Kamar">
->>>>>>> 9e071b799c1f1d8b94ba185073b79281a4ec01d6
-                            @error('nama')
+                            @error('tipe')
                                 <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
                             @enderror
-
                             <br>
-
                             Harga Kamar
-                            <input type="text" class="form-control" name="harga" placeholder="Harga Kamar">
-                            @error('alamat')
+                            <input type="number" class="form-control" name="harga" placeholder="Harga Kamar">
+                            @error('harga')
                                 <div style="color:red; font-weight:bold;position:absolute;left:70%;top:31%;font-size:14px" > <<< {{$message}}</div>
                             @enderror
-
-
                             <br>
-
                             Info Kamar
-                            <input type="number" class="form-control" name="info" placeholder="Info Kamar">
-
+                            <input type="text" class="form-control" name="info" placeholder="Info Kamar">
+                            @error('info')
+                            <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
+                            @enderror
                             <br>
                             <br>
                             <img src="" id="foto" width="200" height="200"><br><br>
                             <input type="file" id="img" name="img" accept="image/*">
-
                             <br><br>
-                            <input type="submit" value="Tambah"><br>
+                            <input type="submit" value="Tambah Room Type"><br><br>
                         </form>
-
+                        <div class="button-box">
+                            <button type="submit"><a href="/AddRoom">Go to Add ROOM</a></button>
+                        </div>
                     </div>
                 </div>
             </div>
