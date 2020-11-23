@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoomtypeMigration extends Migration
+class AddForeignKeyRoom extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateRoomtypeMigration extends Migration
      */
     public function up()
     {
-        Schema::create('roomtype_migration', function (Blueprint $table) {
-            $table->increments('roomtype_id');
-            $table->string('name');
-            $table->integer('roomtype_capacity');
-            $table->integer('price');
+        Schema::table('room', function (Blueprint $table) {
+            $table->foreign("roomtype_id")->references("roomtype_id")->on("roomtype");
         });
     }
 
@@ -28,6 +25,8 @@ class CreateRoomtypeMigration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roomtype_migration');
+        Schema::table('room', function (Blueprint $table) {
+            $table->dropForeign(["roomtype_id"]);
+        });
     }
 }
