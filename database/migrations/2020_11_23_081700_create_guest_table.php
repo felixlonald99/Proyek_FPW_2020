@@ -16,10 +16,10 @@ class CreateGuestTable extends Migration
         Schema::create('guest', function (Blueprint $table) {
             $table->string('nama');
             $table->string('email');
-            $table->int('mobilenumber');
+            $table->integer('mobilenumber');
             $table->string('password');
-            $table->int('saldo');
-            $table->int('status');
+            $table->integer('saldo');
+            $table->integer('status');
             $table->timestamps();
         });
     }
