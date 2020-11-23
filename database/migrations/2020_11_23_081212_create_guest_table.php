@@ -18,6 +18,8 @@ class CreateGuestTable extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('password');
+            $table->integer('saldo');
+            $table->integer('status');
             $table->date('birthdate');
             $table->timestamps();
         });

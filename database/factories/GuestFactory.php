@@ -13,6 +13,8 @@ $factory->define(GuestModel::class, function (Faker $faker) {
         'email' => $faker->email,
         'password' => 'dummypassword',
         'phone' => $phone,
+        'saldo' => 0,
+        'status' => 0,
         'birthdate' => $faker->dateTimeBetween("-70 years", "-20 years"),
     ];
 });
