@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Cookie;
 use App\Rules\cekEmail;
 use App\Rules\cekPassword;
 use Illuminate\Support\Facades\DB;
-
+use App\Account;
+use App\Room;
+use App\RoomType;
+use App\Guest;
 
 class ControllerHalaman extends Controller
 {
@@ -237,4 +240,30 @@ class ControllerHalaman extends Controller
             </script>";
         }
     }
+
+    function tambahPenginapan(Request $request){
+        $rules = [
+            'tipe' => 'required ',
+            'harga' => 'required',
+            'info' => 'required',
+        ];
+        $customError = [
+            'required' => 'Harus di isi ! '
+        ];
+
+        $this->validate($request,$rules,$customError);
+
+        $tipe = $request->input('tipe');
+        $harga = $request->input('harga');
+        $detail = $request->input('info');
+        $room = new RoomType;
+        // $room->id = 1;
+        $room->tipe_kamar = $tipe;
+        $room->harga_kamar = $harga;
+        $room->foto_kamar = "";
+        $room->detail_kamar = $detail;
+        $room->save();
+        return view('components.admin');
+    }
+
 }
