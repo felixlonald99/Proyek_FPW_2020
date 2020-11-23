@@ -15,7 +15,7 @@ class FacilitySeeder extends Seeder
         //wifi
         $roomtype = new FacilityModel();
         $roomtype->facility_name = "Wifi";
-        $roomtype->roomtype_id = 1; //select where room_number<room_number
+        $roomtype->roomtype_id = 1; //select where facility.roomtype_id<room.roomtype_id
         $roomtype->save();
 
         //shower
