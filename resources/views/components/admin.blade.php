@@ -192,7 +192,7 @@
                         <form method = "POST" action="{{ url('/tambahPenginapan') }}">
                             @csrf
 
-                            Nama Penginapan
+                            Nama Tipe Kamar:
                             <input type="text" class="form-control" name="nama" placeholder="Nama Penginapan">
                             @error('nama')
                                 <div style="color:red; font-weight:bold;position:absolute;left:70%;top:21%;font-size:14px" > <<< {{$message}}</div>
