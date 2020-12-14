@@ -293,13 +293,13 @@ class ControllerHalaman extends Controller
         $tipe = $request->input('tipe');
         $harga = $request->input('harga');
         $detail = $request->input('info');
-        $room = new RoomType;
-        // $room->id = 1;
-        $room->tipe_kamar = $tipe;
-        $room->harga_kamar = $harga;
-        $room->foto_kamar = "";
-        $room->detail_kamar = $detail;
-        $room->save();
+        // $room = new RoomType;
+        // // $room->id = 1;
+        // $room->tipe_kamar = $tipe;
+        // $room->harga_kamar = $harga;
+        // $room->foto_kamar = "";
+        // $room->detail_kamar = $detail;
+        // $room->save();
         return view('components.admin');
     }
 

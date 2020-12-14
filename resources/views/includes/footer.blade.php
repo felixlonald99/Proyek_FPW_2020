@@ -1,16 +1,10 @@
-<style>
-    .footer{
-        clear: both;
-        margin-top:100px;
-        background-color:darkslategray ;
-        color:white;
-        font-family: 'Quicksand', sans-serif;
-        font-weight: bold;
-        font-size: 20px;
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-</style>
 <div class="footer">
-    <center>© Copyright HotelInn<br> Contact : 0812696969 <br> - Best choices to sleep and relax - </center>
+    <footer class="tm-bg-dark-blue">
+        <div class="container">
+            <div class="row">
+                <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
+                Copyright &copy; <span class="tm-current-year">2020</span> Hotel </p>
+            </div>
+        </div>
+    </footer>
 </div>
