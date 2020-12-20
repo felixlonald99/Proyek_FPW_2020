@@ -20,7 +20,8 @@ Route::get('/detail','ControllerHalaman@detailPage');
 Route::get('/admin','ControllerHalaman@adminPage');
 Route::get('/profile','ControllerHalaman@profilePage');
 Route::get('/logout','ControllerHalaman@logout');
-
+Route::get('/history','ControllerHalaman@historyPage');
+Route::get('/cancelbooking/{booking_number?}','ControllerHalaman@cancelbook');
 
 Route::post('/changePassword','ControllerHalaman@changePassword');
 Route::post('/prosesRegister','ControllerHalaman@prosesRegister');
@@ -31,3 +32,7 @@ Route::post('/book','ControllerHalaman@book');
 Route::post('bookRoom','ControllerHalaman@bookRoom');
 
 Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
+
+
+Route::get('/checkout/{booking_number?}','CheckoutController@checkout');
+Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->name('checkout.credit-card');

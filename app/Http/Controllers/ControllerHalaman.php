@@ -8,6 +8,7 @@ use App\Rules\cekEmail;
 use App\Rules\cekPassword;
 use Illuminate\Support\Facades\DB;
 use App\Account;
+use App\BookingModel;
 use App\Room;
 use App\RoomType;
 use App\Guest;
@@ -367,5 +368,15 @@ class ControllerHalaman extends Controller
         // $room->save();
         return view('components.admin');
     }
-
+    function historyPage(Request $request){
+        $data = DB::table('booking')->get();
+        return view('components.history',["datas"=>$data]);
+    }
+    function cancelbook(Request $request,$booking_number){
+        DB::table('booking')
+        ->where('booking_number',$booking_number)
+        ->update(['booking_status'=>-1]);
+        return redirect("/history");
+    }
+    
 }
