@@ -278,6 +278,7 @@ class ControllerHalaman extends Controller
         }
     }
 
+<<<<<<< HEAD
     // function tambahPenginapan(Request $request){
     //     $rules = [
     //         'tipe' => 'required ',
@@ -302,5 +303,31 @@ class ControllerHalaman extends Controller
     //     $room->save();
     //     return view('components.admin');
     // }
+=======
+    function tambahPenginapan(Request $request){
+        $rules = [
+            'tipe' => 'required ',
+            'harga' => 'required',
+            'info' => 'required',
+        ];
+        $customError = [
+            'required' => 'Harus di isi ! '
+        ];
+
+        $this->validate($request,$rules,$customError);
+
+        $tipe = $request->input('tipe');
+        $harga = $request->input('harga');
+        $detail = $request->input('info');
+        // $room = new RoomType;
+        // // $room->id = 1;
+        // $room->tipe_kamar = $tipe;
+        // $room->harga_kamar = $harga;
+        // $room->foto_kamar = "";
+        // $room->detail_kamar = $detail;
+        // $room->save();
+        return view('components.admin');
+    }
+>>>>>>> 6165865f7ab39e39f85fbd3ffecd20f9c636aae9
 
 }
