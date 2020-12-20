@@ -40,6 +40,24 @@ class CheckoutController extends Controller
         DB::table('booking')
         ->where('booking_number',$booking_number)
         ->update(['booking_status'=>1,'payment_status'=>1]);
+        $data = DB::table('booking')->where('booking_number',$booking_number)->get();
+        foreach ($data as $key ) {
+            $email = $key->guest_email;
+            $nama = $key->guest_name;
+            $in = $key->check_in;
+            $out = $key->check_out;
+            $roomnum = $key->room_number;
+        }
+        DB::table('bookedroom')->insert(
+            array(
+                "booking_number" => $booking_number,
+                "guest_email" => $email,
+                "guest_name" => $nama,
+                "check_in" => $in,
+                "check_out" => $out,
+                "room_number" => $roomnum,
+            )
+        );
         return redirect("/history");
     }
 }

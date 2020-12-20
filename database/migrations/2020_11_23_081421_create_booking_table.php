@@ -21,6 +21,7 @@ class CreateBookingTable extends Migration
             $table->integer('total_guest');
             $table->integer('roomtype_id');
             $table->string('roomtype_name');
+            $table->string('room_number');
             $table->date('check_in');
             $table->date('check_out');
             $table->integer('invoice_number');

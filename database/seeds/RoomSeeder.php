@@ -21,6 +21,7 @@ class RoomSeeder extends Seeder
                 $room->room_number = "1".$i;
             }
             $room->roomtype_id = 1;
+            $room->room_status = 0;
             $room->save();
         }
 
@@ -33,6 +34,7 @@ class RoomSeeder extends Seeder
                 $room->room_number = "2".$i;
             }
             $room->roomtype_id = 2;
+            $room->room_status = 0;
             $room->save();
         }
 
@@ -45,11 +47,12 @@ class RoomSeeder extends Seeder
                 $room->room_number = "3".$i;
             }
             $room->roomtype_id = 3;
+            $room->room_status = 0;
             $room->save();
         }
 
         //401-415 luxury room
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 15; $i++) {
             $room = new RoomModel();
             if ($i<10) {
                 $room->room_number = "40".$i;
@@ -57,6 +60,7 @@ class RoomSeeder extends Seeder
                 $room->room_number = "4".$i;
             }
             $room->roomtype_id = 4;
+            $room->room_status = 0;
             $room->save();
         }
 
@@ -69,6 +73,7 @@ class RoomSeeder extends Seeder
                 $room->room_number = "5".$i;
             }
             $room->roomtype_id = 5;
+            $room->room_status = 0;
             $room->save();
         }
     }

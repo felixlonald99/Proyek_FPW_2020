@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call([
             GuestSeeder::class,
-            // RoomtypeSeeder::class,
-            // RoomSeeder::class,
-            // FacilitySeeder::class,
+            RoomtypeSeeder::class,
+            RoomSeeder::class,
+            FacilitySeeder::class,
         ]);
 
     }

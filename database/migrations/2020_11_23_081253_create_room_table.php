@@ -16,6 +16,7 @@ class CreateRoomTable extends Migration
         Schema::create('room', function (Blueprint $table) {
             $table->integer('room_number')->primary();
             $table->integer('roomtype_id');
+            $table->integer('room_status');
         });
     }
 
