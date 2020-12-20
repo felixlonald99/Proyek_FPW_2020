@@ -65,6 +65,8 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> --}}
 
+<form method = "POST" action="{{ url('/bookRoom') }}">
+    @csrf
     <div class="tm-main-content" id="top">
         <div class="tm-top-bar-bg"></div>
         <div class="tm-section tm-bg-img" id="tm-section-1">
@@ -81,7 +83,7 @@
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                        <input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Check In">
+                                        <input name="check-in" type="text" class="form-control" name="bookingDate" id="inputCheckIn" placeholder="Check In">
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-moon-o fa-2x tm-form-element-icon"></i>
@@ -328,6 +330,7 @@
             </div>
         </div>
     </div>
+</form>
 
     <script>
 

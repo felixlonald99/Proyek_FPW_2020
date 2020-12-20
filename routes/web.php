@@ -28,5 +28,6 @@ Route::post('/prosesLogin','ControllerHalaman@prosesLogin');
 Route::post('/tambahPenginapan','ControllerHalaman@tambahPenginapan');
 Route::post('/topup','ControllerHalaman@topup');
 Route::post('/book','ControllerHalaman@book');
+Route::post('bookRoom','ControllerHalaman@bookRoom');
 
 Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
