@@ -12,6 +12,7 @@ use App\BookingModel;
 use App\Room;
 use App\RoomType;
 use App\Guest;
+use Illuminate\Support\Facades\Redis;
 
 class ControllerHalaman extends Controller
 {
@@ -39,6 +40,16 @@ class ControllerHalaman extends Controller
 
     }
 
+    function findRoom(Request $request){
+        $checkin = $request->input("checkin");
+        $check = DB::table('booking')->select('*')->get();
+
+        foreach($check as $item){
+            $hasil = date_diff($item->check_in,$item->check_out);
+            return $hasil."<br>";
+        }
+        return $checkin;
+    }
     function changePassword(Request $request){
         $rules = [
             'old' => 'required',
@@ -378,5 +389,5 @@ class ControllerHalaman extends Controller
         ->update(['booking_status'=>-1]);
         return redirect("/history");
     }
-    
+
 }

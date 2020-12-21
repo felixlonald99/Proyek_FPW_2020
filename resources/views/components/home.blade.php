@@ -9,6 +9,7 @@
                     <div class="row">
                         <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                             <form action="/findRoom" method="post" class="tm-search-form tm-section-pad-2">
+                                @csrf
                                 <div class="form-row tm-search-form-row">
                                     <div class="form-group tm-form-element tm-form-element-100">
                                         <i class="fa fa-map-marker fa-2x tm-form-element-icon"></i>
@@ -16,7 +17,7 @@
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                        <input name="check-in" type="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" placeholder="Check In">
+                                        <input name="checkin" type="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" placeholder="Check In">
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-moon-o fa-2x tm-form-element-icon"></i>
