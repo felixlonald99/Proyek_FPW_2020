@@ -8,7 +8,7 @@
                 <div class="container ie-h-align-center-fix">
                     <div class="row">
                         <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                            <form action="index.html" method="get" class="tm-search-form tm-section-pad-2">
+                            <form action="/findRoom" method="post" class="tm-search-form tm-section-pad-2">
                                 <div class="form-row tm-search-form-row">
                                     <div class="form-group tm-form-element tm-form-element-100">
                                         <i class="fa fa-map-marker fa-2x tm-form-element-icon"></i>
@@ -36,22 +36,6 @@
                                     </div>
                                 </div>
                                 <div class="form-row tm-search-form-row">
-                                    {{-- <div class="form-group tm-form-element tm-form-element-4">
-                                        <select name="adult" class="form-control tm-select" id="adult">
-                                            <option value="">Adult</option>
-                                            <option value="1">1 room</option>
-                                            <option value="2">2 room</option>
-                                            <option value="3">3 room</option>
-                                            <option value="4">4 room</option>
-                                            <option value="5">5 room</option>
-                                            <option value="6">6 room</option>
-                                            <option value="7">7 room</option>
-                                            <option value="8">8 room</option>
-                                            <option value="9">9 room</option>
-                                            <option value="10">10 room</option>
-                                        </select>
-                                        <i class="fa fa-2x fa-user tm-form-element-icon"></i>
-                                    </div> --}}
                                     <div class="form-group tm-form-element tm-form-element-4">
                                         <select name="room" class="form-control tm-select" id="room">
                                             <option value="">Room</option>
