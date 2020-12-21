@@ -20,7 +20,6 @@ class ControllerHalaman extends Controller
     function loginPage(){
         return view ('components.login');
     }
-
     function registerPage(){
         return view ('components.register');
     }
@@ -151,9 +150,10 @@ class ControllerHalaman extends Controller
 
     function logout(){
         DB::table('guest')->where('status',1)->update(["status"=>0]);
+        Cookie::queue(Cookie::forget('cookieLogin'));
         echo
             "<script>
-                window.location.href='http://localhost:8000/home';
+                window.location.href='http://localhost:8000/login';
             </script>";
     }
 
@@ -225,6 +225,18 @@ class ControllerHalaman extends Controller
         }
         else if(count($checkguest)>0 && count($checkMultipleLogin)>0){
             DB::table('guest')->where('phone',$phone)->update(["status"=>1]);
+
+            foreach($checkguest as $item){
+                $emaillogin = $item->email;
+            }
+
+            $userCookie = array(
+                "emaillogin" => $emaillogin
+            );
+
+            $userCLogin[] = $userCookie;
+            $cookie = json_encode($userCLogin);
+            Cookie::queue("cookieLogin",$cookie,120);
 
             return redirect('/home');
         }

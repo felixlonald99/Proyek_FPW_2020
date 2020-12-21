@@ -35,8 +35,10 @@ Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
 
 
 Route::get('/checkout/{booking_number?}','CheckoutController@checkout');
+Route::get('/checkout/{booking_number?}/{promo_code?}','CheckoutController@checkout');
 Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->name('checkout.credit-card');
 
 Route::get('findRoompage','ControllerHalaman@findroompage');
 Route::post('findRoom','ControllerHalaman@findRoom');
 Route::get('promocode','ControllerHalaman@promocode');
+Route::post('cekpromocode/{booking_number?}','CheckoutController@cekpromocode');

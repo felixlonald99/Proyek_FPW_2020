@@ -19,13 +19,37 @@
     <div class="container" style="margin-top:10%;margin-bottom:10%">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="">
-                    <p>You will be charged Rp
-                        @foreach ($datas as $item)
-                            {{$item->total_price}}
-                        @endforeach
-                    </p>
-                </div>
+                <form action="cekpromocode/{{$number}}" method="post" id="payment-form">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>You will be charged Rp
+                                @foreach ($datas as $item)
+                                    {{$item->total_price}}
+                                @endforeach
+                            </p>
+                        </div>
+
+                        @if(!isset($potongan))
+                            <div class="col-md-3"></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">
+                                    <p>Enter Promo Code Here :</p>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" placeholder="Enter Promo Code..." name="promocode">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="submit" class="btn btn-secondary">Submit</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        @endif
+
+                    </div>
+
+                </form>
+                <br>
                 <div class="card">
                     <form action="{{route('checkout.credit-card')}}/{{$number}}"  method="post" id="payment-form">
                         @csrf

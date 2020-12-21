@@ -1,6 +1,10 @@
 <title>HotelInn</title>
 @extends('home')
 @section('content')
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <div class="tm-top-bar-bg"></div>
 <table class="table table-hover table-bordered" border="2">
     <tr>
@@ -23,21 +27,26 @@
         <td>{{$item->total_price}}</td>
         <td>
             @if ($item->booking_status == 0)
-            <center style="color: yellow">WAITING</center>
+                <span class="badge badge-warning">WAITING</span></center>
             @else
                 @if ($item->booking_status == -1)
-                    <center style="color: red">CANCELED</center>
+                    <span class="badge badge-danger">CANCELED</span></center>
                 @else
                     @if ($item->payment_status == 1)
-                    <center style="color: green">SUCCESS</center>
+                    <span class="badge badge-success">SUCCESS</span></center>
                     @endif
                 @endif
             @endif
         </td>
         <td>
             @if ($item->booking_status==0)
-                <button class="button-box btn-outline-success"><a href="/checkout/{{$item->booking_number}}">PAY</a></button>
-                <button class="button-box btn-outline-danger"><a href="/cancelbooking/{{$item->booking_number}}">CANCEL</a></button>
+            <form action="/checkout/{{$item->booking_number}}" method="get">
+                <button type="submit" class="btn btn-success">PAY</button>
+            </form>
+
+            <form action="/cancelbooking/{{$item->booking_number}}" method="get">
+                <button type="submit" class="btn btn-danger">CANCEL</button>
+            </form>
             @endif
         </td>
     </tr>

@@ -14,7 +14,7 @@ class CreatePromoTable extends Migration
     public function up()
     {
         Schema::create('promo', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('nama_promo');
             $table->integer('nominal_potongan');
             $table->integer('minimal_transaksi');

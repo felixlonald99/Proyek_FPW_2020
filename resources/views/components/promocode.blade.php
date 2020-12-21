@@ -6,5 +6,4 @@
 
 <div class="tm-top-bar-bg"></div>
 
-
 @endsection

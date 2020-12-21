@@ -25,6 +25,9 @@
                       <li class="nav-item">
                         <a class="nav-link" href="index.html" method="get">Profile</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/logout" method="get">Logout</a>
+                      </li>
                     </ul>
                 </div>
             </nav>
