@@ -37,4 +37,5 @@ Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
 Route::get('/checkout/{booking_number?}','CheckoutController@checkout');
 Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->name('checkout.credit-card');
 
+Route::get('findRoompage','ControllerHalaman@findroompage');
 Route::post('findRoom','ControllerHalaman@findRoom');

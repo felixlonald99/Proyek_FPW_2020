@@ -13,6 +13,7 @@ use App\Room;
 use App\RoomType;
 use App\Guest;
 use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
 
 class ControllerHalaman extends Controller
 {
@@ -43,12 +44,65 @@ class ControllerHalaman extends Controller
     function findRoom(Request $request){
         $checkin = $request->input("checkin");
         $check = DB::table('booking')->select('*')->get();
+        $room = DB::table('roomtype')->select('*')->get();
+        $i = 0;
+        $tipe = [];
+
+        foreach($room as $item){
+            $i++;
+            $tipe[$i] =$item->roomtype_capacity;
+        }
 
         foreach($check as $item){
-            $hasil = date_diff($item->check_in,$item->check_out);
-            return $hasil."<br>";
+            $tglcheckin= Carbon::createFromDate($item->check_in)->format('Y-m-d');
+            $now = Carbon::createFromDate($request->input("checkin"))->format('Y-m-d');
+            $night = Carbon::createFromDate($request->input("checkin"))->addDays($request->input("night"))->format('Y-m-d');
+            $tglantara = Carbon::createFromDate($item->check_in)->format('Y-m-d');
+            $tglantara2 = Carbon::createFromDate($item->check_out)->format('Y-m-d');
+
+            if($now >= $tglcheckin || $night > $tglantara && $night < $tglantara2){
+                for($i = 1 ; $i <= 5; $i++){
+                    if($item->roomtype_id == $i){
+                        $tipe[$i]--;
+                    }
+                }
+            }
+
+            $tglcheckout= Carbon::createFromDate($item->check_out)->format('Y-m-d');
+            if($tglcheckout <= $now){
+                for($i = 1 ; $i <= 5; $i++){
+                    if($item->roomtype_id == $i){
+                        $tipe[$i]++;
+                    }
+                }
+            }
+
+            $ctr = 0 ;
+            $ctrkosong = 0;
+
+            for($i = 1 ; $i <= 5; $i++){
+                if($tipe[$i] < $request->input('room')){
+                    $ctr++;
+                }
+            }
+            if($ctr == 5){
+                $ctrkosong = 1;
+            }
         }
-        return $checkin;
+        // for($i = 1 ; $i <= 5; $i++){
+        //     echo $tipe[$i]."<br>";
+        // }
+        return view('components.findroom',[
+            "tipe" => $tipe,
+            "room" => $request->input('room'),
+            "ctrkosong" => $ctrkosong
+        ]);
+
+    }
+    function findroompage(){
+        return view('components.findroom',[
+
+        ]);
     }
     function changePassword(Request $request){
         $rules = [

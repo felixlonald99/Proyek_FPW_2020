@@ -1,6 +1,7 @@
 <title>HotelInn</title>
 @extends('home')
 @section('content')
+<div class="tm-top-bar-bg"></div>
 <table class="table table-hover table-bordered" border="2">
     <tr>
         <td>Booking Number</td>
