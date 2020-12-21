@@ -1,72 +1,6 @@
 <title>HotelInn</title>
 @extends('home')
 @section('content')
-{{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-    .boxHotel{
-        width: 500px;
-        height: 230px;
-        border: 2px solid #ccc;
-        margin-bottom: 50px;
-        -webkit-transition: 0.5s ease;
-        background-color: darkslategray;
-    }
-    .boxHotel:hover{
-        cursor: pointer;
-    }
-    .photoHotel{
-        position: absolute;
-        top:10px;
-        left:30px;
-        width: 200px;
-        height: 200px;
-        border: 2px solid #ccc;
-    }
-    .hotelName{
-        position: absolute;
-        left:250px;
-        top:10px;
-        width: 230px;
-        height: 50px;
-        font-size:20px;
-        font-weight:bold;
-        color:tomato;
-        font-family: 'Roboto', sans-serif;
-    }
-    button{
-        width: 100px;
-        height: 30px;
-        background-color: darkslategray;
-        border: none;
-        color: white;
-        font-size: 30px;
-        font-family: 'Quicksand', sans-serif;
-        font-weight: bold;
-        transition: 0.5s;
-    }
-</style>
-    <div class="container" style="margin-top:150px;margin-left:130px;">
-        <div class="row">
-            @isset($penginapan)
-                @foreach ($penginapan as $hotel)
-                <a href="detailPage/{{$hotel->nama}}">
-                    <div class="col-6">
-                        <div class="boxHotel">
-                            <div class="photoHotel"><img src="{{$hotel->link}}" width="200" height="200"></div>
-                            <div class="hotelName">{{$hotel->nama}}</div>
-                        </div>
-                    </div>
-                </a>
-                @endforeach
-            @endisset
-        </div>
-    </div>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> --}}
-
-<form method = "POST" action="{{ url('/bookRoom') }}">
-    @csrf
     <div class="tm-main-content" id="top">
         <div class="tm-top-bar-bg"></div>
         <div class="tm-section tm-bg-img" id="tm-section-1">
@@ -75,19 +9,19 @@
                     <div class="row">
                         <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                             <form action="index.html" method="get" class="tm-search-form tm-section-pad-2">
-                                Nama Hotel
                                 <div class="form-row tm-search-form-row">
                                     <div class="form-group tm-form-element tm-form-element-100">
                                         <i class="fa fa-map-marker fa-2x tm-form-element-icon"></i>
-                                        <input name="city" type="text" class="form-control" id="inputCity" placeholder="Type your destination...">
+                                        <input name="city" type="text" class="form-control" id="inputCity" value="HotelInn" placeholder="HotelInn..." disabled>
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                        <input name="check-in" type="text" class="form-control" name="bookingDate" id="inputCheckIn" placeholder="Check In">
+                                        <input name="check-in" type="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" placeholder="Check In">
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-moon-o fa-2x tm-form-element-icon"></i>
-                                        <select name="night" class="form-control tm-select" id="night">
+                                        <select name="night" class="form-control tm-select">
+                                            <option value="">Night</option>
                                             <option value="1">1 night</option>
                                             <option value="2">2 night</option>
                                             <option value="3">3 night</option>
@@ -102,35 +36,35 @@
                                     </div>
                                 </div>
                                 <div class="form-row tm-search-form-row">
-                                    <div class="form-group tm-form-element tm-form-element-4">
+                                    {{-- <div class="form-group tm-form-element tm-form-element-4">
                                         <select name="adult" class="form-control tm-select" id="adult">
                                             <option value="">Adult</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
+                                            <option value="1">1 room</option>
+                                            <option value="2">2 room</option>
+                                            <option value="3">3 room</option>
+                                            <option value="4">4 room</option>
+                                            <option value="5">5 room</option>
+                                            <option value="6">6 room</option>
+                                            <option value="7">7 room</option>
+                                            <option value="8">8 room</option>
+                                            <option value="9">9 room</option>
+                                            <option value="10">10 room</option>
                                         </select>
                                         <i class="fa fa-2x fa-user tm-form-element-icon"></i>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group tm-form-element tm-form-element-4">
                                         <select name="room" class="form-control tm-select" id="room">
                                             <option value="">Room</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
+                                            <option value="1">1 room</option>
+                                            <option value="2">2 room</option>
+                                            <option value="3">3 room</option>
+                                            <option value="4">4 room</option>
+                                            <option value="5">5 room</option>
+                                            <option value="6">6 room</option>
+                                            <option value="7">7 room</option>
+                                            <option value="8">8 room</option>
+                                            <option value="9">9 room</option>
+                                            <option value="10">10 room</option>
                                         </select>
                                         <i class="fa fa-2x fa-bed tm-form-element-icon"></i>
                                     </div>
@@ -330,7 +264,6 @@
             </div>
         </div>
     </div>
-</form>
 
     <script>
 
