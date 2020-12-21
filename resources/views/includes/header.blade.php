@@ -17,7 +17,7 @@
                         <a class="nav-link" href="/home" method="get">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="index.html" method="get">Promo</a>
+                        <a class="nav-link" href="/promocode" method="get">Promo</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="/history" method="get">History</a>

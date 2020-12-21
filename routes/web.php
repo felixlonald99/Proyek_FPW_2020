@@ -39,3 +39,4 @@ Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->nam
 
 Route::get('findRoompage','ControllerHalaman@findroompage');
 Route::post('findRoom','ControllerHalaman@findRoom');
+Route::get('promocode','ControllerHalaman@promocode');

@@ -344,6 +344,10 @@ class ControllerHalaman extends Controller
         }
     }
 
+    function promocode(){
+        return view('components.promocode');
+    }
+
     function bookRoom(Request $request){
         $getGuest = DB::table('guest')->select('*')->where('status',1)->get();
         $room = $request->input('room');
