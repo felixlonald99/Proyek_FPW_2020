@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use PDO;
 use App\PromoModel;
+use App\ServiceModel;
+use App\InvoiceModel;
 
 class AdminController extends Controller
 {
@@ -104,15 +106,32 @@ class AdminController extends Controller
         return view('admin.addservice',["datas"=>$data,"num"=>0,"menu"=>$menu]);
     }
     function insertservice(Request $request){
+        $rules = [
+            'booknumber' => 'required',
+            'servicename' => 'required',
+            'service_price' => 'required'
+        ];
+        $customError = [
+            'required' => 'Harus di Pilih !!',
+            'service_price.required'=>'Tidak Boleh Kosong'
+        ];
+        $this->validate($request,$rules,$customError);
         $bookingnumber = $request->input('booknumber');
         $service_name = $request->input('servicename');
         $serviceprice = $request->input('service_price');
-        // dd($bookingnumber);
-        DB::table('service')->insert(
+        $serve = new ServiceModel();
+        $serve->booking_number = $bookingnumber;
+        $serve->service_name = $service_name;
+        $serve->service_price = $serviceprice;
+        $serve->save();
+        $upd = InvoiceModel::All()->where('booking_number',$bookingnumber);
+        foreach ($upd as $key ) {
+            $totalprice = $key->total_price;
+        }
+        $totalprice+=$serviceprice;
+        DB::table('invoice')->where('booking_number',$bookingnumber)->update(
             array(
-                "booking_number" => $bookingnumber,
-                'service_name' => $service_name,
-                'service_price' => $serviceprice,
+                "total_price" => $totalprice
             )
         );
         return redirect("/addservicepage");
