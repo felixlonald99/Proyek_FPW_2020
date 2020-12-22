@@ -41,7 +41,11 @@ Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->nam
 Route::get('findRoompage','ControllerHalaman@findroompage');
 Route::post('findRoom','ControllerHalaman@findRoom');
 Route::get('promocode','ControllerHalaman@promocode');
-Route::post('cekpromocode/{booking_number?}','CheckoutController@cekpromocode');
+
+Route::post('paywith','ControllerHalaman@paywith');
+Route::post('dopaywith','ControllerHalaman@dopaywith');
+Route::post('cekpromocode','ControllerHalaman@cekpromocode');
+Route::post('paycash','ControllerHalaman@paycash');
 
 // ======================== ADMIN ========================
 Route::get('/admin','AdminController@adminpage');
