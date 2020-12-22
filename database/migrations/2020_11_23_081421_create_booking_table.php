@@ -14,8 +14,7 @@ class CreateBookingTable extends Migration
     public function up()
     {
         Schema::create('booking', function (Blueprint $table) {
-            $table->integer('booking_number');
-            $table->datetime('booking_date');
+            $table->integer('booking_number')->primary();
             $table->string('guest_email');
             $table->string('guest_name');
             $table->integer('total_guest');
@@ -28,7 +27,7 @@ class CreateBookingTable extends Migration
             $table->integer('nights');
             $table->integer('total_price');
             $table->integer('booking_status');
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();;
             $table->integer('payment_status');
             $table->datetime('payment_datetime')->nullable();
             $table->timestamps();

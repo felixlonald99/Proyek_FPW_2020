@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -31,6 +32,7 @@ class AdminController extends Controller
     }
 
     function masteruserpage(){
+        $listusers = DB::table('user')->paginate(10);
         return view('admin.masteruser',[
 
         ]);

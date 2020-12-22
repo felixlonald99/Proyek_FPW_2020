@@ -15,8 +15,9 @@ class CreateInvoiceTable extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->integer('invoice_number')->primary();
-            $table->integer('booking_number');
-            $table->integer('total_price');
+            $table->integer('booking_number'); //fk
+            $table->string('guest_email'); //fk
+            $table->integer('total_price'); //service price
             $table->string('payment_method');
             $table->integer('payment_status');
             $table->datetime('payment_datetime')->nullable();
