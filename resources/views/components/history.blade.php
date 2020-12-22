@@ -9,7 +9,6 @@
 <table class="table table-hover table-bordered" border="2">
     <tr>
         <td>Booking Number</td>
-        <td>Booking Date</td>
         <td>Guest Name</td>
         <td>Total Guest</td>
         <td>Room Type</td>
@@ -20,7 +19,6 @@
     @foreach ($datas as $item)
     <tr>
         <td>{{$item->booking_number}}</td>
-        <td>{{$item->booking_date}}</td>
         <td>{{$item->guest_name}}</td>
         <td>{{$item->total_guest}}</td>
         <td>{{$item->roomtype_name}}</td>
