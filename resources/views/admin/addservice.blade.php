@@ -57,18 +57,27 @@
                                     @foreach ($datas as $item)
                                         <option value="{{$item->booking_number}}">{{$item->booking_number}}</option>
                                     @endforeach
-                                </select><br>
+                                </select>
+                                @error('booknumber')
+                                <div class="alert alert-danger">{{$message}}</div>
+                                @enderror<br>
                                 Service Name
                                 <select name="service_name" id="service_name" class="form-control tm-select" onchange="service()">
                                     <option value="">Pilih Menu</option>
                                     @for ($i = 1; $i <= count($menu['list']); $i++)
                                         <option value="{{$i}}">{{$menu['list'][$i-1]}}</option>
                                     @endfor
-                                </select><br>
+                                </select>
+                                @error('servicename')
+                                <div class="alert alert-danger">{{$message}}</div>
+                                @enderror<br>
                                 Service Price
                                 <input type="hidden" name="booknumber" id="booknumber" value="" class="form-control" >
                                 <input type="hidden" name="servicename" id="servicename" value="" class="form-control">
-                                <input type="text" name="service_price" id="service_price" value="" class="form-control"><br>
+                                <input type="text" name="service_price" id="service_price" value="" class="form-control">
+                                @error('service_price')
+                                <div class="alert alert-danger">{{$message}}</div>
+                                @enderror<br>
                                 <button type="submit" class="btn btn-primary form-control">Submit</button>
                             </form>
                         </div>
