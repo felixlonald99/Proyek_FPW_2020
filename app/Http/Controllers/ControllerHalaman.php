@@ -12,6 +12,7 @@ use App\BookingModel;
 use App\Room;
 use App\RoomType;
 use App\Guest;
+use App\PromoModel;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 
@@ -105,6 +106,64 @@ class ControllerHalaman extends Controller
 
         ]);
     }
+    function paywith(Request $request){
+        $booking_number = $request->input('booknum');
+
+        $data = DB::table('booking')->where('booking_number',$booking_number)->get();
+        foreach($data as $item){
+            $usepromo = $item->use_promo;
+        }
+
+        return view('components.paywith',[
+            'number' => $booking_number,
+            'datas' => $data,
+            'use_promo' => $usepromo
+        ]);
+    }
+    public function cekpromocode(Request $request){
+        $booking_number = $request->input('booknum');
+        $kode = $request->input('promocode');
+
+        $cekkode = DB::table('promo')->where('nama_promo',$kode)->get();
+        $potongan = 0;
+        foreach($cekkode as $item){
+            $potongan = $item->nominal_potongan;
+        }
+
+        $data = DB::table('booking')->where('booking_number',$booking_number)->get();
+        $totalbefore = 0;
+        foreach($data as $item){
+            $totalbefore = $item->total_price;
+        }
+
+
+        if(count($cekkode) > 0){
+            $totalafter=$totalbefore-$potongan;
+            DB::table('booking')->where('booking_number',$booking_number)->update([
+                'total_price' =>$totalafter,
+                'use_promo'=> 1
+            ]);
+
+
+            $data = DB::table('booking')->where('booking_number',$booking_number)->get();
+            foreach($data as $item){
+                $usepromo = $item->use_promo;
+            }
+            return view('components.paywith',[
+                'number' => $booking_number,
+                'datas' => $data,
+                'use_promo' => $usepromo
+            ]);
+        }
+
+    }
+    function paycash(Request $request){
+        DB::table('booking')->where('booking_number',$request->input('booknum'))->update([
+            'payment_status'=> 1
+        ]);
+
+        return redirect("/history");
+    }
     function changePassword(Request $request){
         $rules = [
             'old' => 'required',
@@ -155,7 +214,7 @@ class ControllerHalaman extends Controller
         Cookie::queue(Cookie::forget('cookieLogin'));
         echo
             "<script>
-                window.location.href='http://localhost:8000/login';
+                window.location.href='http://localhost:8000/home';
             </script>";
     }
 
@@ -352,7 +411,11 @@ class ControllerHalaman extends Controller
     }
 
     function promocode(){
-        return view('components.promocode');
+        $listpromo = PromoModel::All();
+
+        return view('components.promocode',[
+            "listpromo" => $listpromo
+        ]);
     }
 
     function bookRoom(Request $request){

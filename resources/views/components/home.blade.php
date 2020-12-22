@@ -1,6 +1,10 @@
 <title>HotelInn</title>
 @extends('home')
 @section('content')
+@if (Session::has('message'))
+        <script>alert(`{{ Session::get('message') }}`)</script>
+@endif
+
     <div class="tm-main-content" id="top">
         <div class="tm-top-bar-bg"></div>
         <div class="tm-section tm-bg-img" id="tm-section-1">
