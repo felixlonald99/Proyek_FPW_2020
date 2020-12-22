@@ -42,7 +42,6 @@ class ControllerHalaman extends Controller
     }
 
     function findRoom(Request $request){
-        $checkin = $request->input("checkin");
         $check = DB::table('booking')->select('*')->get();
         $room = DB::table('roomtype')->select('*')->get();
         $i = 0;
@@ -91,13 +90,12 @@ class ControllerHalaman extends Controller
                 $ctrkosong = 1;
             }
         }
-        // for($i = 1 ; $i <= 5; $i++){
-        //     echo $tipe[$i]."<br>";
-        // }
         return view('components.findroom',[
             "tipe" => $tipe,
             "room" => $request->input('room'),
-            "ctrkosong" => $ctrkosong
+            "ctrkosong" => $ctrkosong,
+            "night" => $request->input("night"),
+            "room" => $request->input("room")
         ]);
 
     }
@@ -277,7 +275,6 @@ class ControllerHalaman extends Controller
         $password = $request->input('password');
 
         $checkguest = DB::table('guest')->select('*')->where('phone',$phone)->where('password',$password)->get();
-        $checkMultipleLogin = DB::table('guest')->select('*')->where('phone',$phone)->where('password',$password)->where('status',0)->get();
 
         if($phone=="admin" && $password=="admin"){
             echo
@@ -341,76 +338,6 @@ class ControllerHalaman extends Controller
         return view('components.admin');
     }
 
-    function topup(Request $request){
-        $getguest = DB::table('guest')->select('*')->where('status',1)->get();
-        $nominal = $request->input('nominal');
-        $total = $getguest[0]->saldo + $nominal;
-
-        if($nominal%100000!=0){
-            echo
-            "<script>
-                alert('Nominal harus kelipatan Rp.100.000');
-                window.location.href='http://localhost:8000/profile';
-            </script>";
-        }
-        else{
-            DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
-            echo
-            "<script>
-                alert('Berhasil topup');
-                window.location.href='http://localhost:8000/profile';
-            </script>";
-        }
-    }
-
-    function book(Request $request){
-        $getguest = DB::table('guest')->select('*')->where('status',1)->get();
-        $room = $request->input('room');
-        $getroom = DB::table('room')->select('*')->where('nama',$room)->get();
-
-        $start = $request->input('start');
-        $end = $request->input('end');
-
-        $subStart = substr($start,5);
-        $subStartMonth = substr($subStart,0,2);
-        $subStartDay = substr($subStart,3,2);
-
-        $subEnd = substr($end,5);
-        $subEndMonth = substr($subEnd,0,2);
-        $subEndDay = substr($subEnd,3,2);
-
-        $jumlahHari = ((int)$subEndMonth - (int)$subStartMonth)*30+$subEndDay-$subStartDay;
-        $harga = $jumlahHari*$getroom[0]->harga;
-
-        if($getguest[0]->saldo - $harga <0){
-            echo
-            "<script>
-                alert('Saldo anda tidak cukup!');
-                window.location.href='http://localhost:8000/detailPage/{$getroom[0]->nama}';
-            </script>";
-        }
-        else{
-            $total = $getguest[0]->saldo - $harga;
-            DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
-
-            $data = [
-                'room' => $getroom[0]->nama,
-                'guest' => $getguest[0]->nama,
-                'harga' => $getroom[0]->harga,
-                'link' => $getroom[0]->link,
-                'hari' => $jumlahHari,
-                'total' => $harga
-            ];
-            DB::table('history')->insert($data);
-
-            echo
-            "<script>
-                alert('Berhasil book hotel!');
-                window.location.href='http://localhost:8000/detailPage/{$getroom[0]->nama}';
-            </script>";
-        }
-    }
-
     function promocode(){
         $listpromo = PromoModel::All();
 
@@ -426,18 +353,29 @@ class ControllerHalaman extends Controller
         $tipe3 = $request->input('tipe3');
         $tipe4 = $request->input('tipe4');
         $tipe5 = $request->input('tipe5');
+        $nights = $request->input('nights');
+        $rooms = intval($request->input('rooms'));
+        $totalBookRooms = $tipe1+$tipe2+$tipe3+$tipe4+$tipe5;
+
+        if($rooms==$totalBookRooms){
+
+        }
+        else{
+
+        }
+
+        $getBookingNumber = DB::table('booking')->select('*')->get();
+        $getInvoice = DB::table('invoice')->select('*')->get();
 
         $data = [
-            'booking_date' => date("Y/m/d"),
+            'booking_number' => count($getBookingNumber)+1,
             'guest_email' => $getGuest[0]->email,
             'guest_name' => $getGuest[0]->name,
-            'total_guest' => $totalGuest,
             'roomtype_id' => 5,
             'roomtype_name' => "Family Suite",
-            'check_in' => date("Y/m/d"),
-            'check_out' => date("Y/m/d"),
-            'invoice_number' => 1,
-            'total_price' => 15000000,
+            'room_number' => 200,
+            'nights' => 200,
+            'total_price' => 1500000,
             'booking_status' => 0,
             'payment_status' => 0
         ];

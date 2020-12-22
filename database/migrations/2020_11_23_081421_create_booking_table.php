@@ -17,20 +17,18 @@ class CreateBookingTable extends Migration
             $table->integer('booking_number')->primary();
             $table->string('guest_email');
             $table->string('guest_name');
-            $table->integer('total_guest');
             $table->integer('roomtype_id');
             $table->string('roomtype_name');
             $table->string('room_number');
-            $table->integer('room_amount');
-            $table->date('check_in');
-            $table->date('check_out');
-            $table->integer('nights');
+            $table->date('check_in')->nullable();
+            $table->date('check_out')->nullable();
+            $table->integer('nights')->nullable();
             $table->integer('total_price');
             $table->integer('booking_status');
-            $table->string('payment_method')->nullable();;
+            $table->string('payment_method')->nullable();
             $table->integer('payment_status');
             $table->datetime('payment_datetime')->nullable();
-            $table->integer('use_promo');
+            $table->integer('use_promo')->nullable();
             $table->timestamps();
         });
     }

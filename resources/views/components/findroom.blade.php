@@ -9,7 +9,7 @@
 
 <table class="table">
     @if($ctrkosong == 0)
-        <form method="post" action="{{ url('/bookingRoom') }}">
+        <form method="post" action="{{ url('/bookRoom') }}">
             @csrf
             @if($tipe[1] >= $room)
                 <tr>
@@ -46,6 +46,9 @@
                     <td>Jumlah yang ingin dipesan<br><input type="number" value="0" id="num5" name="tipe5"></td>
                 </tr>
             @endif
+
+            <input type="hidden" name="nights" value="{{$night}}">
+            <input type="hidden" name="rooms" value="{{$room}}">
 
             <div class="row">
                 <div class="col-md-12">
