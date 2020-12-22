@@ -30,6 +30,7 @@ class CreateBookingTable extends Migration
             $table->string('payment_method')->nullable();;
             $table->integer('payment_status');
             $table->datetime('payment_datetime')->nullable();
+            $table->integer('use_promo');
             $table->timestamps();
         });
     }
