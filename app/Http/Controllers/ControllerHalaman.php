@@ -46,6 +46,8 @@ class ControllerHalaman extends Controller
         $room = DB::table('roomtype')->select('*')->get();
         $i = 0;
         $tipe = [];
+        $ctrkosong = 0;
+
 
         foreach($room as $item){
             $i++;
@@ -355,9 +357,11 @@ class ControllerHalaman extends Controller
 
     function bookRoom(Request $request){
         $getGuest = DB::table('guest')->select('*')->where('status',1)->get();
-        $room = $request->input('room');
-        $date = $request->input('bookingDate');
-        $totalGuest = $request->input('adult');
+        $tipe1 = $request->input('tipe1');
+        $tipe2 = $request->input('tipe2');
+        $tipe3 = $request->input('tipe3');
+        $tipe4 = $request->input('tipe4');
+        $tipe5 = $request->input('tipe5');
 
         $data = [
             'booking_date' => date("Y/m/d"),
@@ -374,48 +378,6 @@ class ControllerHalaman extends Controller
             'payment_status' => 0
         ];
         DB::table('booking')->insert($data);
-
-        // $start = $request->input('start');
-        // $end = $request->input('end');
-
-        // $subStart = substr($start,5);
-        // $subStartMonth = substr($subStart,0,2);
-        // $subStartDay = substr($subStart,3,2);
-
-        // $subEnd = substr($end,5);
-        // $subEndMonth = substr($subEnd,0,2);
-        // $subEndDay = substr($subEnd,3,2);
-
-        // $jumlahHari = ((int)$subEndMonth - (int)$subStartMonth)*30+$subEndDay-$subStartDay;
-        // $harga = $jumlahHari*$getroom[0]->harga;
-
-        // if($getguest[0]->saldo - $harga <0){
-        //     echo
-        //     "<script>
-        //         alert('Saldo anda tidak cukup!');
-        //         window.location.href='http://localhost:8000/detailPage/{$getroom[0]->nama}';
-        //     </script>";
-        // }
-        // else{
-        //     $total = $getguest[0]->saldo - $harga;
-        //     DB::table('guest')->where('status',1)->update(["saldo"=>$total]);
-
-        //     $data = [
-        //         'room' => $getroom[0]->nama,
-        //         'guest' => $getguest[0]->nama,
-        //         'harga' => $getroom[0]->harga,
-        //         'link' => $getroom[0]->link,
-        //         'hari' => $jumlahHari,
-        //         'total' => $harga
-        //     ];
-        //     DB::table('history')->insert($data);
-
-        //     echo
-        //     "<script>
-        //         alert('Berhasil book hotel!');
-        //         window.location.href='http://localhost:8000/detailPage/{$getroom[0]->nama}';
-        //     </script>";
-        // }
     }
 
     function tambahPenginapan(Request $request){
