@@ -59,10 +59,10 @@ Route::get('/masteruserpage','AdminController@masteruserpage');
 Route::get('/masterbookingpage','AdminController@masterbookingpage');
 Route::get('/masterpromopage','AdminController@masterpromopage');
 Route::get('/addnewbookingpage','AdminController@masterpromopage');
-Route::get('/addservicepage','AdminController@masterpromopage');
+Route::get('/addservicepage','AdminController@addservicepage');
 
 Route::post('/insertpromo','AdminController@insertpromo');
 Route::post('/deletepromo','AdminController@deletepromo');
-
+Route::post('/insertservice','AdminController@insertservice');
 
 

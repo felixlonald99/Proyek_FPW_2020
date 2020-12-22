@@ -83,4 +83,38 @@ class AdminController extends Controller
                 window.location.href='http://localhost:8000/masterpromopage';
             </script>";
     }
+    function addservicepage(Request $request){
+        $data = DB::table('booking')->get();
+        $daftarmenu = [
+            "Nasi Goreng","Mie Goreng","Nasi Pecel Ayam","Nasi Empal","Mie Pangsit",
+            "Nasi Kuning","Chicken Karrage","Nasi Kari","Batagor","Coto Makassar",
+            "Air Mineral","Fanta","Sprite","Coca Cola","Pulpy Orange",
+            "Es Teh Manis","Es Teh Tawar","Teh Manis Hangat","Teh Tawar Hangat","Frestea",
+        ];
+        $harga = [
+            "32000","27000","25000","23000","25000",
+            "30000","20000","30000","20000","28000",
+            "5000","6500","6500","6500","7500",
+            "5000","3000","5000","3000","8000",
+        ];
+        $menu = array(
+            "list" => $daftarmenu,
+            "harga" => $harga
+        );
+        return view('admin.addservice',["datas"=>$data,"num"=>0,"menu"=>$menu]);
+    }
+    function insertservice(Request $request){
+        $bookingnumber = $request->input('booknumber');
+        $service_name = $request->input('servicename');
+        $serviceprice = $request->input('service_price');
+        // dd($bookingnumber);
+        DB::table('service')->insert(
+            array(
+                "booking_number" => $bookingnumber,
+                'service_name' => $service_name,
+                'service_price' => $serviceprice,
+            )
+        );
+        return redirect("/addservicepage");
+    }
 }
