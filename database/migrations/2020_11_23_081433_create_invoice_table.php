@@ -18,7 +18,7 @@ class CreateInvoiceTable extends Migration
             $table->integer('booking_number'); //fk
             $table->string('guest_email'); //fk
             $table->integer('total_price'); //service price
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->integer('payment_status');
             $table->datetime('payment_datetime')->nullable();
         });

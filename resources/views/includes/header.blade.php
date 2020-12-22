@@ -23,7 +23,7 @@
                             <a class="nav-link" href="/history" method="get">History</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html" method="get">Profile</a>
+                            <a class="nav-link" href="/profile" method="get">Profile</a>
                         </li>
                         @if(Cookie::get('cookieLogin'))
                             <li class="nav-item">

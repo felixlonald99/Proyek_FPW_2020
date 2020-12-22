@@ -7,7 +7,7 @@
 <style>
     #boxHotel{
         width: 1050px;
-        height: 700px;
+        height: 500px;
         border: 2px solid #ccc;
         margin-bottom: 50px;
         -webkit-transition: 0.5s ease;
@@ -41,7 +41,7 @@
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
-        font-size:20px;
+        font-size:16px;
         transition:0.5s;
     }
     input:hover[type=submit]{
@@ -59,7 +59,7 @@
     }
     #profileTitle{
         position: absolute;
-        left:320px;
+        left:200px;
         top:320px;
         width: 600px;
         height: 50px;
@@ -112,23 +112,12 @@
         color:white;
         font-family: 'Roboto', sans-serif;
     }
-    #profiletopUp{
-        position: absolute;
-        left:200px;
-        top:700px;
-        width: 600px;
-        height: 50px;
-        font-size:20px;
-        font-weight:bold;
-        color:white;
-        font-family: 'Roboto', sans-serif;
-    }
     #pembatas{
         position: absolute;
-        left: 650px;
-        top:350px;
+        left: 680px;
+        top:300px;
         width:1px;
-        height: 600px;
+        height: 300px;
         background-color: white;
     }
     #historyTitle{
@@ -152,8 +141,8 @@
     }
     #changePasswordTitle{
         position: absolute;
-        top:580px;
-        left:275px;
+        top:320px;
+        left:820px;
         font-size:30px;
         font-weight:bold;
         color:white;
@@ -164,18 +153,18 @@
         padding: 10px 10px;
         border: 2px solid #ccc;
         border-radius: 4px;
-        font-size:16px;
+        font-size:14px;
     }
     #btnSave{
         position:absolute;
-        left:25%;
-        top:140%;
+        left:65%;
+        top:90%;
         margin-bottom: 50px;
     }
 </style>
 
 <div class="container" style="margin-top:150px;margin-left:130px;color:white;font-weight:100;">
-    <div id="pageTitle"><h1 style="color: black">Profile</h1></div>
+    <div id="pageTitle"><h1 style="color:white">Profile</h1></div>
     <div id="boxHotel">
         <div id="profileTitle">Profile Info</div>
         <div id="pembatas"></div>
@@ -190,35 +179,17 @@
         <div id="changePasswordTitle">Change Password</div>
         <form method = "POST" action="{{ url('/changePassword') }}">
             @csrf
-            <input type="password" name="old" placeholder="Old Password" style="position:absolute;top:660px;left:200px;" ></div>
+            <input type="password" name="old" placeholder="Old Password" style="position:absolute;top:400px;left:730px;" ></div>
             @error('old')
-                <div style="color:red; font-weight:bold; position: absolute;top:670px;left:205px;width:380px;text-align:right;" >  {{$message}}</div>
+                <div style="color:red; font-weight:bold; position: absolute;top:410px;left:740px;width:380px;text-align:right;" >  {{$message}}</div>
             @enderror
-            <input type="password" name="new" placeholder="New Password" style="position:absolute;top:720px;left:200px;"></div>
-            @error('new')
-            <div style="color:red; font-weight:bold; position: absolute;top:730px;left:205px;width:380px;text-align:right;" >  {{$message}}</div>
+            <input type="password" name="password" placeholder="New Password" style="position:absolute;top:450px;left:730px;"></div>
+            @error('password')
+            <div style="color:red; font-weight:bold; position: absolute;top:460px;left:740px;width:380px;text-align:right;" >  {{$message}}</div>
             @enderror
-            <input type="password" name="confirm" placeholder="Confirm New Password"  style="position:absolute;top:780px;left:200px;"></div>
+            <input type="password" name="password_confirmation" placeholder="Confirm New Password"  style="position:absolute;top:500px;left:730px;"></div>
             <div id="btnSave"><input type="submit" value="Save"></div>
         </form>
-
-        <div id="historyTitle">History</div>
-        <div class="history">
-            <table border="1px" id="history">
-                <tr>
-                    <th>No.</th>
-                    <th>Date</th>
-                    <th>Room Type</th>
-                    <th>Check-In</th>
-                    <th>Check-Out</th>
-                    <th>Total</th>
-                </tr>
-                @foreach ($history as $key)
-                    <tr>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
     </div>
 </div>
 @endsection

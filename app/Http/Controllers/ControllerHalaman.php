@@ -95,7 +95,8 @@ class ControllerHalaman extends Controller
             "room" => $request->input('room'),
             "ctrkosong" => $ctrkosong,
             "night" => $request->input("night"),
-            "room" => $request->input("room")
+            "room" => $request->input("room"),
+            "checkin" =>$request->input("checkin")
         ]);
 
     }
@@ -166,7 +167,7 @@ class ControllerHalaman extends Controller
     function changePassword(Request $request){
         $rules = [
             'old' => 'required',
-            'new' => ['required','min:8','max:12','confirmed', new cekPassword]
+            'password' => ['required','min:8','max:12','confirmed', new cekPassword]
         ];
 
         $customError = [
@@ -176,14 +177,18 @@ class ControllerHalaman extends Controller
         $this->validate($request,$rules,$customError);
 
         $old = $request->input('old');
-        $new = $request->input('new');
-        $confirm = $request->input('confirm');
+        $password = $request->input('password');
 
         $cekOld = DB::table('guest')->select('*')->where('status',1)->where('password',$old)->get();
 
         if(count($cekOld)>0){
-            if($new!=$old){
-                DB::table('guest')->where('status',1)->update(["password"=>$new]);
+            if($password!=$old){
+                DB::table('guest')->where('status',1)->update(["password"=>$password]);
+                echo
+                "<script>
+                    alert('Password berhasil diganti!')
+                    window.location.href='http://localhost:8000/profile';
+                </script>";
             }
             else{
                 echo
@@ -357,29 +362,64 @@ class ControllerHalaman extends Controller
         $rooms = intval($request->input('rooms'));
         $totalBookRooms = $tipe1+$tipe2+$tipe3+$tipe4+$tipe5;
 
-        if($rooms==$totalBookRooms){
+        for ($i=0; $i < $totalBookRooms; $i++) {
+            $getBookingNumber = DB::table('booking')->select('*')->get();
+            $getInvoice = DB::table('invoice')->select('*')->get();
+            $getRoom = "";
+            $roomTipe = 0;
 
+            if($tipe1!=0){
+                $tipe1--;
+                $roomTipe=1;
+            }
+            else if($tipe2!=0){
+                $tipe2--;
+                $roomTipe=2;
+            }
+            else if($tipe3!=0){
+                $tipe3--;
+                $roomTipe=3;
+            }
+            else if($tipe4!=0){
+                $tipe4--;
+                $roomTipe=4;
+            }
+            else if($tipe5!=0){
+                $tipe5--;
+                $roomTipe=5;
+            }
+
+            $getRoom = DB::table('roomtype')->select('*')->where('roomtype_id',$roomTipe)->get();
+            $getRoomNumber = DB::table('room')->select('*')->where('roomtype_id',$roomTipe)->where('room_status',0)->get();
+
+            $data = [
+                'booking_number' => count($getBookingNumber)+1,
+                'guest_email' => $getGuest[0]->email,
+                'guest_name' => $getGuest[0]->name,
+                'roomtype_id' => $roomTipe,
+                'roomtype_name' => $getRoom[0]->roomtype_name,
+                'room_number' => $getRoomNumber[0]->room_number,
+                'nights' => $nights,
+                'total_price' => $nights*$getRoom[0]->roomtype_price,
+                'booking_status' => 0,
+                'payment_status' => 0
+            ];
+            DB::table('booking')->insert($data);
+            DB::table('room')->where('room_number',$getRoomNumber[0]->room_number)->update(['room_status'=>1]);
+
+            $data = [
+                'invoice_number' => count($getInvoice)+1,
+                'booking_number' => count($getBookingNumber)+1,
+                'guest_email' => $getGuest[0]->email,
+                'total_price' => $nights*$getRoom[0]->roomtype_price,
+                'payment_status' => 0
+            ];
+            DB::table('invoice')->insert($data);
         }
-        else{
 
-        }
 
-        $getBookingNumber = DB::table('booking')->select('*')->get();
-        $getInvoice = DB::table('invoice')->select('*')->get();
-
-        $data = [
-            'booking_number' => count($getBookingNumber)+1,
-            'guest_email' => $getGuest[0]->email,
-            'guest_name' => $getGuest[0]->name,
-            'roomtype_id' => 5,
-            'roomtype_name' => "Family Suite",
-            'room_number' => 200,
-            'nights' => 200,
-            'total_price' => 1500000,
-            'booking_status' => 0,
-            'payment_status' => 0
-        ];
-        DB::table('booking')->insert($data);
+        $getBooking = DB::table('booking')->select('*')->where('guest_email',$getGuest[0]->email)->get();
+        return view('components.history',['datas'=>$getBooking]);
     }
 
     function tambahPenginapan(Request $request){
