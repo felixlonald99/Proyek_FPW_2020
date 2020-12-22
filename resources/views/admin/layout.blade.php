@@ -40,6 +40,11 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- Font Awesome 6 -->
+    <script
+      src="https://use.fontawesome.com/releases/v5.15.1/js/all.js"
+      data-auto-a11y="true"
+    ></script>
 </head>
 
 
@@ -71,19 +76,22 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li>
-                <a href="/masteruser"><i class="fa fa-user"></i> <span>Manage Users</span></a>
+                <a href="/masteruserpage"><i class="fa fa-user"></i> <span>&nbsp;Registered Users</span></a>
             </li>
             <li>
-                <a href="/masterbooking"><i class="fa fa-book"></i> <span>Manage Bookings</span></a>
+                <a href="/masterbookingpage"><i class="fa fa-book"></i> <span>&nbsp;Bookings</span></a>
             </li>
             <li>
-                <a href="/masterpromo"><i class="fa fa-dollar"></i> <span>Manage Promotions</span></a>
+                <a href="/masterpromopage"><i class="fa fa-dollar-sign"></i> <span>&nbsp;Promotions</span></a>
             </li>
             <li>
-                <a href="/booking"><i class="fa fa-plus-square"></i> <span>Add New Booking</span></a>
+                <a href="/addnewbookingpage"><i class="fa fa-plus-square"></i> <span>&nbsp;Add New Booking</span></a>
             </li>
             <li>
-                <a href="/adminlogout"><i class="fa fa-power-off"></i> <span>Log Out</span></a>
+                <a href="/addservicepage"><i class="fas fa-concierge-bell"></i> <span>&nbsp;Add Service</span></a>
+            </li>
+            <li>
+                <a href="/adminlogout"><i class="fa fa-power-off"></i> <span>&nbsp;Log Out</span></a>
             </li>
         </ul>
         </section>

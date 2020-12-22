@@ -52,6 +52,9 @@ Route::get('/adminlogout','AdminController@adminlogout');
 Route::get('/masteruserpage','AdminController@masteruserpage');
 Route::get('/masterbookingpage','AdminController@masterbookingpage');
 Route::get('/masterpromopage','AdminController@masterpromopage');
+Route::get('/addnewbookingpage','AdminController@masterpromopage');
+Route::get('/addservicepage','AdminController@masterpromopage');
+
 Route::post('/insertpromo','AdminController@insertpromo');
 Route::post('/ubahstatuspromo','AdminController@ubahstatuspromo');
 

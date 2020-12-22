@@ -51,7 +51,7 @@
                     <!-- box md 6-->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Table Booking Customer</h3>
+                            <h3 class="box-title">Booking Table</h3>
                         </div>
                     <!-- /.box-header -->
                         <div class="box-body">
@@ -92,7 +92,7 @@
                                 <tbody>
                                     <tr>
                                     <th style="width: 15px">ID</th>
-                                    <th>Client Name</th>
+                                    <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Service</th>

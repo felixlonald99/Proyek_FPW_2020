@@ -61,7 +61,7 @@
                 @enderror
 
                 <div id="phoneInput">
-                    <input type="text" class="form-control" name="phone" placeholder="Phone"   >
+                    <input type="text" class="form-control" name="phone" placeholder="Phone (+628 . . . )"   >
                 </div>
                 @error('phone')
                     <div style="color:red; font-weight:bold;position:absolute;left:77%;top:32%;font-size:14px;width:200px;" > <<< {{$message}}</div>

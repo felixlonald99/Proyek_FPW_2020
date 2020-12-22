@@ -32,9 +32,9 @@ class AdminController extends Controller
     }
 
     function masteruserpage(){
-        $listusers = DB::table('user')->paginate(10);
+        $listusers = DB::table('guest')->paginate(10);
         return view('admin.masteruser',[
-
+            'listusers' => $listusers,
         ]);
     }
     function masterpromopage(){
