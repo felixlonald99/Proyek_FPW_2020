@@ -18,7 +18,6 @@ class CreatePromoTable extends Migration
             $table->string('nama_promo');
             $table->integer('nominal_potongan');
             $table->integer('minimal_transaksi');
-            $table->integer('status');
         });
     }
 

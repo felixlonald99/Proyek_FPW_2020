@@ -223,7 +223,7 @@ class ControllerHalaman extends Controller
                 window.location.href='http://localhost:8000/admin';
             </script>";
         }
-        else if(count($checkguest)>0 && count($checkMultipleLogin)>0){
+        else if(count($checkguest)>0){
             DB::table('guest')->where('phone',$phone)->update(["status"=>1]);
 
             foreach($checkguest as $item){
@@ -239,13 +239,6 @@ class ControllerHalaman extends Controller
             Cookie::queue("cookieLogin",$cookie,120);
 
             return redirect('/home');
-        }
-        else if (count($checkguest)>0 && count($checkMultipleLogin)==0){
-            echo
-            "<script>
-                alert('Akun ini sudah login!');
-                window.location.href='http://localhost:8000/login';
-            </script>";
         }
         else{
             echo

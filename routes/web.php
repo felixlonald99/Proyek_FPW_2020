@@ -56,5 +56,7 @@ Route::get('/addnewbookingpage','AdminController@masterpromopage');
 Route::get('/addservicepage','AdminController@masterpromopage');
 
 Route::post('/insertpromo','AdminController@insertpromo');
-Route::post('/ubahstatuspromo','AdminController@ubahstatuspromo');
+Route::post('/deletepromo','AdminController@deletepromo');
+
+
 
