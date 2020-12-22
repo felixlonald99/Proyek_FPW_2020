@@ -42,3 +42,16 @@ Route::get('findRoompage','ControllerHalaman@findroompage');
 Route::post('findRoom','ControllerHalaman@findRoom');
 Route::get('promocode','ControllerHalaman@promocode');
 Route::post('cekpromocode/{booking_number?}','CheckoutController@cekpromocode');
+
+// ======================== ADMIN ========================
+Route::get('/admin','AdminController@adminpage');
+Route::post('/dologinadmin','AdminController@dologinadmin');
+Route::get('/adminlogout','AdminController@adminlogout');
+
+
+Route::get('/masteruserpage','AdminController@masteruserpage');
+Route::get('/masterbookingpage','AdminController@masterbookingpage');
+Route::get('/masterpromopage','AdminController@masterpromopage');
+Route::post('/insertpromo','AdminController@insertpromo');
+Route::post('/ubahstatuspromo','AdminController@ubahstatuspromo');
+

@@ -26,10 +26,11 @@ class CreateBookingTable extends Migration
             $table->date('check_in');
             $table->date('check_out');
             $table->integer('nights');
-            $table->integer('invoice_number');
             $table->integer('total_price');
             $table->integer('booking_status');
+            $table->string('payment_method');
             $table->integer('payment_status');
+            $table->datetime('payment_datetime')->nullable();
             $table->timestamps();
         });
     }
