@@ -38,7 +38,6 @@
         </td>
         <td>
             @if ($item->booking_status==0)
-            {{-- <form action="/checkout/{{$item->booking_number}}" method="get"> --}}
             <form action="/paywith" method="post">
                 @csrf
                 <input type="hidden" value="{{$item->booking_number}}" name="booknum">

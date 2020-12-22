@@ -40,7 +40,6 @@
                 Choose payment method :
                 <br>
 
-
                 <form action="/paycash" method="post">
                     @csrf
                     <input type="hidden" value="{{$number}}" name="booknum">

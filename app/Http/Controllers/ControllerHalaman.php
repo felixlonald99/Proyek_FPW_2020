@@ -12,6 +12,7 @@ use App\BookingModel;
 use App\Room;
 use App\RoomType;
 use App\Guest;
+use App\PromoModel;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 
@@ -211,7 +212,7 @@ class ControllerHalaman extends Controller
         Cookie::queue(Cookie::forget('cookieLogin'));
         echo
             "<script>
-                window.location.href='http://localhost:8000/login';
+                window.location.href='http://localhost:8000/home';
             </script>";
     }
 
@@ -408,7 +409,11 @@ class ControllerHalaman extends Controller
     }
 
     function promocode(){
-        return view('components.promocode');
+        $listpromo = PromoModel::All();
+
+        return view('components.promocode',[
+            "listpromo" => $listpromo
+        ]);
     }
 
     function bookRoom(Request $request){

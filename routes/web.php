@@ -18,34 +18,36 @@ Route::get('/login','ControllerHalaman@loginPage');
 Route::get('/register','ControllerHalaman@registerPage');
 Route::get('/detail','ControllerHalaman@detailPage');
 Route::get('/admin','ControllerHalaman@adminPage');
-Route::get('/profile','ControllerHalaman@profilePage');
-Route::get('/logout','ControllerHalaman@logout');
-Route::get('/history','ControllerHalaman@historyPage');
-Route::get('/cancelbooking/{booking_number?}','ControllerHalaman@cancelbook');
-
-Route::post('/changePassword','ControllerHalaman@changePassword');
 Route::post('/prosesRegister','ControllerHalaman@prosesRegister');
 Route::post('/prosesLogin','ControllerHalaman@prosesLogin');
-Route::post('/tambahPenginapan','ControllerHalaman@tambahPenginapan');
-Route::post('/topup','ControllerHalaman@topup');
-Route::post('/book','ControllerHalaman@book');
-Route::post('bookRoom','ControllerHalaman@bookRoom');
-
-Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
+Route::get('/promocode','ControllerHalaman@promocode');
 
 
-Route::get('/checkout/{booking_number?}','CheckoutController@checkout');
-Route::get('/checkout/{booking_number?}/{promo_code?}','CheckoutController@checkout');
-Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->name('checkout.credit-card');
+Route::group(['middleware' => ['CheckUserLogin']], function () {
+    Route::get('/profile','ControllerHalaman@profilePage');
+    Route::get('/logout','ControllerHalaman@logout');
+    Route::get('/history','ControllerHalaman@historyPage');
+    Route::get('/cancelbooking/{booking_number?}','ControllerHalaman@cancelbook');
 
-Route::get('findRoompage','ControllerHalaman@findroompage');
-Route::post('findRoom','ControllerHalaman@findRoom');
-Route::get('promocode','ControllerHalaman@promocode');
+    Route::post('/changePassword','ControllerHalaman@changePassword');
+    Route::post('/tambahPenginapan','ControllerHalaman@tambahPenginapan');
+    Route::post('/topup','ControllerHalaman@topup');
+    Route::post('/book','ControllerHalaman@book');
+    Route::post('bookRoom','ControllerHalaman@bookRoom');
+    Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
 
-Route::post('paywith','ControllerHalaman@paywith');
-Route::post('dopaywith','ControllerHalaman@dopaywith');
-Route::post('cekpromocode','ControllerHalaman@cekpromocode');
-Route::post('paycash','ControllerHalaman@paycash');
+    Route::get('/checkout/{booking_number?}','CheckoutController@checkout');
+    Route::get('/checkout/{booking_number?}/{promo_code?}','CheckoutController@checkout');
+    Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->name('checkout.credit-card');
+
+    Route::get('/findRoompage','ControllerHalaman@findroompage');
+    Route::post('/findRoom','ControllerHalaman@findRoom');
+
+    Route::post('/paywith','ControllerHalaman@paywith');
+    Route::post('/dopaywith','ControllerHalaman@dopaywith');
+    Route::post('/cekpromocode','ControllerHalaman@cekpromocode');
+    Route::post('/paycash','ControllerHalaman@paycash');
+});
 
 // ======================== ADMIN ========================
 Route::get('/admin','AdminController@adminpage');
