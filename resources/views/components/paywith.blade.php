@@ -2,6 +2,7 @@
 @extends('home')
 @section('content')
 
+
 <div class="tm-top-bar-bg"></div>
 
 <div class="container">

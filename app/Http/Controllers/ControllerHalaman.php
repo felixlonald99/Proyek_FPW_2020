@@ -146,6 +146,7 @@ class ControllerHalaman extends Controller
         $potongan = 0;
         foreach($cekkode as $item){
             $potongan = $item->nominal_potongan;
+            $minimum = $item->minimal_transaksi;
         }
 
         $data = DB::table('booking')->where('booking_number',$booking_number)->get();
@@ -154,26 +155,28 @@ class ControllerHalaman extends Controller
             $totalbefore = $item->total_price;
         }
 
-
         if(count($cekkode) > 0){
-            $totalafter=$totalbefore-$potongan;
-            DB::table('booking')->where('booking_number',$booking_number)->update([
-                'total_price' =>$totalafter,
-                'use_promo'=> 1
-            ]);
+            if($totalbefore >= $minimum){
+                $totalafter=$totalbefore-$potongan;
+                DB::table('booking')->where('booking_number',$booking_number)->update([
+                    'total_price' =>$totalafter,
+                    'use_promo'=> 1
+                ]);
 
-
-            $data = DB::table('booking')->where('booking_number',$booking_number)->get();
-            foreach($data as $item){
-                $usepromo = $item->use_promo;
+                $data = DB::table('booking')->where('booking_number',$booking_number)->get();
+                foreach($data as $item){
+                    $usepromo = $item->use_promo;
+                }
+                return view('components.paywith',[
+                    'number' => $booking_number,
+                    'datas' => $data,
+                    'use_promo' => $usepromo
+                ]);
             }
-            return view('components.paywith',[
-                'number' => $booking_number,
-                'datas' => $data,
-                'use_promo' => $usepromo
-            ]);
+            else{
+                return redirect('/history')->with('message','Promo Invalid');
+            }
         }
-
     }
     function paycash(Request $request){
         DB::table('booking')->where('booking_number',$request->input('booknum'))->update([
