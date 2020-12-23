@@ -94,6 +94,9 @@
                 <a href="/addservicepage"><i class="fas fa-concierge-bell"></i> <span>&nbsp;Add Service</span></a>
             </li>
             <li>
+                <a href="/invoice"><i class="fas fa-dollar-sign"></i> <span>&nbsp;INVOICE</span></a>
+            </li>
+            <li>
                 <a href="/adminlogout"><i class="fa fa-power-off"></i> <span>&nbsp;Log Out</span></a>
             </li>
         </ul>

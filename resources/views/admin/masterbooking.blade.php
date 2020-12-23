@@ -29,10 +29,16 @@
                                     <button type="submit" class="btn btn-block btn-warning btn-sm">PENDING</button>
                                 </form>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <form action="/filterpaymentpaid" method="get">
                                     @csrf
                                     <button type="submit" class="btn btn-block btn-success btn-sm">PAID</button>
+                                </form>
+                            </div>
+                            <div class="col-md-1">
+                                <form action="/masterbookingpage" method="get">
+                                    @csrf
+                                    <button type="submit" class="btn btn-block btn-info btn-sm">ALL</button>
                                 </form>
                             </div>
                             <div class="col-md-1">

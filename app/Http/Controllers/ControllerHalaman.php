@@ -174,7 +174,7 @@ class ControllerHalaman extends Controller
                 ]);
             }
             else{
-                return redirect('/history')->with('message','Promo Invalid');
+                return redirect('/history')->with('message','INVALID ! TIDAK MENCAPAI SYARAT MINIMAL TRANSAKSI');
             }
         }
     }

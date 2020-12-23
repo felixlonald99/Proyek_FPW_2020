@@ -116,14 +116,13 @@ class AdminController extends Controller
         $checkout = date('Y-m-d',strtotime($checkinReplace . "+".$nights." days"));
 
         $emailGuest = "";
-        $namaGuest = "";
+        $namaGuest =$request->input('nama');
+
         if(count($getGuest)>0){
             $emailGuest =$getGuest[0]->email;
-            $namaGuest =$getGuest[0]->name;
         }
         else{
             $emailGuest ="guest@guest.com";
-            $namaGuest =$request->input('nama');
         }
 
         for ($i=0; $i < $totalBookRooms; $i++) {
@@ -297,7 +296,7 @@ class AdminController extends Controller
         return redirect('/masterpromopage')->with('status', 'Promo Code deleted');
     }
     function addservicepage(Request $request){
-        $data = DB::table('booking')->get();
+        $data = DB::table('booking')->where('booking_status',1)->get();
         $daftarmenu = [
             "Nasi Goreng","Mie Goreng","Nasi Pecel Ayam","Nasi Empal","Mie Pangsit",
             "Nasi Kuning","Chicken Karrage","Nasi Kari","Batagor","Coto Makassar",
@@ -401,5 +400,18 @@ class AdminController extends Controller
         ]);
     }
 
+    function invoice(){
+        $invoice = DB::table('invoice')->paginate(10);
+        return view('admin.masterinvoice',[
+            'invoice' => $invoice,
+        ]);
+    }
+    function detailinvoice(Request $request){
+
+        $invoice = DB::table('invoice')->paginate(10);
+        return view('admin.masterinvoice',[
+            'invoice' => $invoice,
+        ]);
+    }
 
 }

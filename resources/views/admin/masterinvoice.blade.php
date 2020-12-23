@@ -17,38 +17,13 @@
 
         <section class="content">
             <div class="row">
-                <div class="col-md-6">
-                    <!-- box md 6-->
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h1 class="box-title"><h1>Add Promo Code</h1>
-                        </div>
-                    <!-- /.box-header -->
-                        <div class="box-body">
-                            <form method="post" action="/insertpromo">
-                                @csrf
-                                Promo Code
-                                <input type="text" name="promocode" class="form-control"><br>
-                                Nominal Discount
-                                <input type="text" name="nominal" class="form-control"><br>
-                                Minimum Transaction
-                                <input type="text" name="minimum" class="form-control"><br>
-                                <button type="submit" class="btn btn-primary form-control">Submit</button>
-                            </form>
-                        </div>
 
-                    <!-- /.box-body -->
-                        <div class="box-footer clearfix">
-                        </div>
-                    </div>
-                    <!-- /.box md 6-->
-                </div>
                 {{-- /////////////////////////////////////////// --}}
                 <div class="col-md-6">
                     <!-- box md 6-->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h1 class="box-title"><h1>List Promo Code</h1>
+                            <h1 class="box-title"><h1>INVOICE TABLE</h1>
                         </div>
                     <!-- /.box-header -->
                         <div class="box-body">

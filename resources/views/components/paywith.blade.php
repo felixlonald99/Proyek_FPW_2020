@@ -3,6 +3,10 @@
 @section('content')
 
 
+@if (Session::has('message'))
+        <script>alert(`{{ Session::get('message') }}`)</script>
+@endif
+
 <div class="tm-top-bar-bg"></div>
 
 <div class="container">

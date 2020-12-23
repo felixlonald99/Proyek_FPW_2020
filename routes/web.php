@@ -60,6 +60,7 @@ Route::get('/addnewbookingpage','AdminController@addnewbookingpage');
 Route::get('/addservicepage','AdminController@addservicepage');
 Route::get('/detailbooking','AdminController@detailbooking');
 Route::get('/bookedroompage','AdminController@bookedroompage');
+Route::get('/invoice','AdminController@invoice');
 
 Route::post('/insertpromo','AdminController@insertpromo');
 Route::post('/deletepromo','AdminController@deletepromo');

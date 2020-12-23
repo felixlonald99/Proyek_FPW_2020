@@ -106,7 +106,10 @@
                                     @for ($i = 0; $i < count($menu["list"]); $i++)
                                     <tr>
                                         <td>{{$menu["list"][$i]}}</td>
-                                        <td>{{$menu["harga"][$i]}}</td>
+                                        <?php
+                                            $formatHarga = number_format($menu["harga"][$i],0,',','.');
+                                        ?>
+                                        <td>Rp. {{ $formatHarga }}</td>
                                     </tr>
                                     @endfor
                                 </tbody>
