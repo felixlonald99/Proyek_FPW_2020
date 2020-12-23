@@ -326,9 +326,17 @@ class AdminController extends Controller
             'service_price.required'=>'Tidak Boleh Kosong'
         ];
         $this->validate($request,$rules,$customError);
-        $bookingnumber = $request->input('booknumber');
+        $data = DB::table('booking')->where('booking_status',1)->get();
+        $ctr=0;
+        foreach ($data as $key ) {
+            $ctr++;
+            if($request->input('booknumber') == $ctr){
+                $bookingnumber = $key->booking_number;
+            }
+        }
         $service_name = $request->input('servicename');
         $serviceprice = $request->input('service_price');
+        // dd($bookingnumber);
         $serve = new ServiceModel();
         $serve->booking_number = $bookingnumber;
         $serve->service_name = $service_name;
