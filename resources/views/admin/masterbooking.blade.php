@@ -100,6 +100,9 @@
                                         } else if ($booking->booking_status==2) {
                                             $stat = "CHECKED OUT";
                                             echo "<td><span class='badge bg-red'>$stat</td>";
+                                        } else if ($booking->booking_status==-1) {
+                                            $stat = "CANCELED";
+                                            echo "<td><span class='badge bg-red'>$stat</td>";
                                         }
                                         if ($booking->payment_status==0) {
                                             $stat = "PENDING";
@@ -107,17 +110,26 @@
                                         } else if ($booking->payment_status==1) {
                                             $stat = "PAID";
                                             echo "<td><span class='badge bg-green'>$stat</td>";
+                                        } else if ($booking->booking_status==-1) {
+                                            $stat = "CANCELED";
+                                            echo "<td><span class='badge bg-red'>$stat</td>";
                                         }
                                     ?>
                                     <td>
                                         <table>
                                         <tr>
                                             <td>
-                                                <form action="/detailbooking" method="get">
-                                                    @csrf
-                                                    <input type="hidden" name="booking_number" value="{{$booking->booking_number}}">
-                                                    <button type="submit" class="btn btn-block btn-sm btn-info">DETAIL</button>
-                                                </form>
+                                                <?php
+                                                if ($booking->booking_status!=-1) {
+                                                    ?>
+                                                    <form action="/detailbooking" method="get">
+                                                        @csrf
+                                                        <input type="hidden" name="booking_number" value="{{$booking->booking_number}}">
+                                                        <button type="submit" class="btn btn-block btn-sm btn-info">DETAIL</button>
+                                                    </form><?php
+                                                }
+                                                ?>
+
                                             </td>
                                             {{-- <td>
                                                 <form action="/reject" method="post">
