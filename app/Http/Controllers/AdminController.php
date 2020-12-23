@@ -279,11 +279,7 @@ class AdminController extends Controller
     function insertpromo(Request $request){
         $cekpromo = PromoModel::All()->where('nama_promo',$request->input('promocode'));
         if(count($cekpromo) > 0){
-            echo
-            "<script>
-                alert('Promo Code is already exists');
-                window.location.href='http://localhost:8000/masterpromopage';
-            </script>";
+            return redirect('/masterpromopage')->with('status', 'Promo Code is already exists');
         }
         else{
             $promo = new PromoModel();
@@ -293,20 +289,12 @@ class AdminController extends Controller
             $promo->minimal_transaksi = $request->input('minimum');
             $promo->save();
 
-            echo
-            "<script>
-                alert('Promo Code Successfully Added');
-                window.location.href='http://localhost:8000/masterpromopage';
-            </script>";
+            return redirect('/masterpromopage')->with('status', 'Promo Code Successfully Added');
         }
     }
     function deletepromo(Request $request){
-        DB::table('promo')->where('nama_promo',"TVLK100")->delete();
-        echo
-            "<script>
-                alert('Promo Code deleted');
-                window.location.href='http://localhost:8000/masterpromopage';
-            </script>";
+        DB::table('promo')->where('nama_promo',$request->input('idDelete'))->delete();
+        return redirect('/masterpromopage')->with('status', 'Promo Code deleted');
     }
     function addservicepage(Request $request){
         $data = DB::table('booking')->get();

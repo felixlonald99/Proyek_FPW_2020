@@ -2,6 +2,10 @@
 
 @section('content')
 
+@if (Session::has('status'))
+        <script>alert(`{{ Session::get('status') }}`)</script>
+@endif
+
 <body>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
