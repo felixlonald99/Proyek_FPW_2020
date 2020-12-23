@@ -82,6 +82,9 @@
                 <a href="/masterbookingpage"><i class="fa fa-book"></i> <span>&nbsp;Bookings</span></a>
             </li>
             <li>
+                <a href="/bookedroompage"><i class="fa fa-door-closed"></i> <span>&nbsp;Booked Rooms</span></a>
+            </li>
+            <li>
                 <a href="/masterpromopage"><i class="fa fa-dollar-sign"></i> <span>&nbsp;Promotions</span></a>
             </li>
             <li>

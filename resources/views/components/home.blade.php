@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                        <input name="checkin" type="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" placeholder="Check In">
+                                        <input name="checkin" type="date" class="form-control" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" placeholder="Check In">
                                     </div>
                                     <div class="form-group tm-form-element tm-form-element-50">
                                         <i class="fa fa-moon-o fa-2x tm-form-element-icon"></i>

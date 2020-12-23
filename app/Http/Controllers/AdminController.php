@@ -347,4 +347,59 @@ class AdminController extends Controller
         );
         return redirect("/addservicepage");
     }
+
+    // =========================== FILTER PAYMENT ===========================
+    function filterpaymentpending(){
+        $listbooking = DB::table('booking')->where('payment_status',0)->paginate(10);
+        return view('admin.masterbooking',[
+            'listbooking' => $listbooking,
+        ]);
+    }
+
+    function filterpaymentpaid(){
+        $listbooking = DB::table('booking')->where('payment_status',1)->paginate(10);
+        return view('admin.masterbooking',[
+            'listbooking' => $listbooking,
+        ]);
+    }
+
+    // =========================== FILTER STATUS ===========================
+    function filterstatuspending(){
+        $listbooking = DB::table('booking')->where('booking_status',0)->paginate(10);
+        return view('admin.masterbooking',[
+            'listbooking' => $listbooking,
+        ]);
+    }
+
+    function filterstatuscheckedin(){
+        $listbooking = DB::table('booking')->where('booking_status',1)->paginate(10);
+        return view('admin.masterbooking',[
+            'listbooking' => $listbooking,
+        ]);
+    }
+
+    function filterstatuscheckedout(){
+        $listbooking = DB::table('booking')->where('booking_status',2)->paginate(10);
+        return view('admin.masterbooking',[
+            'listbooking' => $listbooking,
+        ]);
+    }
+
+    function bookedroompage(){
+        $listbooking = DB::table('bookedroom')->paginate(10);
+        return view('admin.masterbookedroom',[
+            'listbooking' => $listbooking,
+        ]);
+    }
+
+
+    function filtertanggal(Request $request){
+        $date = $request->input('date');
+        $data = DB::table('bookedroom')->where('check_in', $date)->paginate(10);
+        return view('admin.masterbookedroom',[
+            'listbooking' => $data,
+        ]);
+    }
+
+
 }

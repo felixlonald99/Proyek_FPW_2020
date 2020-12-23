@@ -9,5 +9,5 @@ class BookedRoomModel extends Model
     protected $connection= 'mysql';
     protected $table = 'bookedroom';
     protected $primaryKey = 'booking_number';
-    public $timestamps = false;
+    public $timestamps = true;
 }

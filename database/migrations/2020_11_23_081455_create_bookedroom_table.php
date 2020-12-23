@@ -17,8 +17,8 @@ class CreateBookedroomTable extends Migration
             $table->integer('booking_number');
             $table->string('guest_email');
             $table->string('guest_name');
-            $table->datetime('check_in');
-            $table->datetime('check_out');
+            $table->date('check_in');
+            $table->date('check_out');
             $table->integer('room_number');
             $table->timestamps();
         });
