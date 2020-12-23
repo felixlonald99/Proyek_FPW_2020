@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BookingModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -41,18 +42,68 @@ class AdminController extends Controller
             'listusers' => $listusers,
         ]);
     }
+
     function masterpromopage(){
         $promo = PromoModel::All();
-
         return view('admin.masterpromo',[
             "promo" => $promo
         ]);
     }
-    function masterbookingpage(){
-        return view('admin.masterbooking',[
 
+    function masterbookingpage(){
+        $listbooking = DB::table('booking')->paginate(10);
+        return view('admin.masterbooking',[
+            'listbooking' => $listbooking,
         ]);
     }
+
+    function detailbooking(Request $request){
+        $bookingnumber = $request->input('booking_number');
+        // $data = DB::table('booking')->where('booking_number', $bookingnumber)->first();
+        $data = BookingModel::find($bookingnumber);
+        //dd($data->roomtype_id);
+
+        // $room = DB::table('room')->where('roomtype_id', $data->roomtype_id)->get(); //return all rooms same type
+        $exclude = DB::table("bookedroom")->select('room_number')->where('check_in', $data->check_in)->get()->toarray();
+
+        $array_exclude = array();
+        foreach ($exclude as $ex){
+            array_push($array_exclude, $ex->room_number);
+        }
+
+        $room = DB::table("room")->select('room_number')->where('roomtype_id', $data->roomtype_id)->get()->toarray();
+        $array_room = array();
+        foreach ($room as $r){
+            array_push($array_room, $r->room_number);
+        }
+
+        $filtered = array_diff($array_room, $array_exclude);
+        // dd($filtered);
+
+        return view('admin.detailbooking',[
+            'data'=>$data,
+            'room'=>$filtered,
+        ]);
+    }
+
+    function changepaymentstatus(Request $request){
+        $bookingnumber = $request->input('booking_number');
+        $payment_status = $request->input('payment_status');
+
+        if ($payment_status==0) {
+            $data = BookingModel::find($bookingnumber);
+            $data->payment_status = 1;
+            $data->save();
+        } else if ($payment_status==1) {
+            $data = BookingModel::find($bookingnumber);
+            $data->payment_status = 0;
+            $data->save();
+        }
+        return view('admin.detailbooking',[
+            'data'=>$data
+        ]);
+    }
+
     function insertpromo(Request $request){
         $cekpromo = PromoModel::All()->where('nama_promo',$request->input('promocode'));
         if(count($cekpromo) > 0){

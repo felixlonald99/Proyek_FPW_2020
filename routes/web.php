@@ -60,9 +60,15 @@ Route::get('/masterbookingpage','AdminController@masterbookingpage');
 Route::get('/masterpromopage','AdminController@masterpromopage');
 Route::get('/addnewbookingpage','AdminController@addnewbookingpage');
 Route::get('/addservicepage','AdminController@addservicepage');
+Route::get('/detailbooking','AdminController@detailbooking');
 
 Route::post('/insertpromo','AdminController@insertpromo');
 Route::post('/deletepromo','AdminController@deletepromo');
 Route::post('/insertservice','AdminController@insertservice');
+
+Route::post('/changepaymentstatus','AdminController@changepaymentstatus');
+
+
+
 
 
