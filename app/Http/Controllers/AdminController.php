@@ -9,6 +9,7 @@ use PDO;
 use App\PromoModel;
 use App\ServiceModel;
 use App\InvoiceModel;
+use App\Rules\cekEmail;
 
 class AdminController extends Controller
 {
@@ -52,6 +53,108 @@ class AdminController extends Controller
         return view('admin.masterbooking',[
 
         ]);
+    }
+    function addnewbookingpage(){
+        return view('admin.addnewbookingpage',[
+        ]);
+    }
+    function bookRoom(Request $request){
+        $rules = [
+            'email' => ['required', new cekEmail],
+            'nama' => 'required | alpha | max:24'
+        ];
+        $customError = [
+            'required' => 'Harus di isi',
+            'alpha'=>'Nama tidak boleh mengandung angka'
+        ];
+        $this->validate($request,$rules,$customError);
+
+        $getGuest = DB::table('guest')->select('*')->where('email',$request->input('email'))->get();
+        $tipe1 = $request->input('tipe1');
+        $tipe2 = $request->input('tipe2');
+        $tipe3 = $request->input('tipe3');
+        $tipe4 = $request->input('tipe4');
+        $tipe5 = $request->input('tipe5');
+        $nights = $request->input('night');
+        $totalBookRooms = $tipe1+$tipe2+$tipe3+$tipe4+$tipe5;
+        $checkin = date('Y-m-d');
+
+        $checkinReplace = str_replace('-', '/', $checkin);
+        $checkout = date('Y-m-d',strtotime($checkinReplace . "+".$nights." days"));
+
+        $emailGuest = "";
+        $namaGuest = "";
+        if(count($getGuest)>0){
+            $emailGuest =$getGuest[0]->email;
+            $namaGuest =$getGuest[0]->name;
+        }
+        else{
+            $emailGuest ="guest@guest.com";
+            $namaGuest =$request->input('nama');
+        }
+
+        for ($i=0; $i < $totalBookRooms; $i++) {
+            $getBookingNumber = DB::table('booking')->select('*')->get();
+            $getInvoice = DB::table('invoice')->select('*')->get();
+            $getRoom = "";
+            $roomTipe = 0;
+
+            if($tipe1!=0){
+                $tipe1--;
+                $roomTipe=1;
+            }
+            else if($tipe2!=0){
+                $tipe2--;
+                $roomTipe=2;
+            }
+            else if($tipe3!=0){
+                $tipe3--;
+                $roomTipe=3;
+            }
+            else if($tipe4!=0){
+                $tipe4--;
+                $roomTipe=4;
+            }
+            else if($tipe5!=0){
+                $tipe5--;
+                $roomTipe=5;
+            }
+
+            $getRoom = DB::table('roomtype')->select('*')->where('roomtype_id',$roomTipe)->get();
+            $getRoomNumber = DB::table('room')->select('*')->where('roomtype_id',$roomTipe)->where('room_status',0)->get();
+
+            $data = [
+                'booking_number' => count($getBookingNumber)+1,
+                'guest_email' => $emailGuest,
+                'guest_name' => $namaGuest,
+                'roomtype_id' => $roomTipe,
+                'roomtype_name' => $getRoom[0]->roomtype_name,
+                'room_number' => 0,
+                'check_in' => $checkin,
+                'check_out' => $checkout,
+                'nights' => $nights,
+                'total_price' => $nights*$getRoom[0]->roomtype_price,
+                'booking_status' => 0,
+                'payment_status' => 0
+            ];
+            DB::table('booking')->insert($data);
+            DB::table('room')->where('room_number',$getRoomNumber[0]->room_number)->update(['room_status'=>1]);
+
+            $data = [
+                'invoice_number' => count($getInvoice)+1,
+                'booking_number' => count($getBookingNumber)+1,
+                'guest_email' =>$emailGuest,
+                'total_price' => 0,
+                'payment_status' => 0
+            ];
+            DB::table('invoice')->insert($data);
+        }
+
+        echo
+            "<script>
+                alert('Berhasil menambahkan booking');
+                window.location.href='http://localhost:8000/addnewbookingpage';
+            </script>";
     }
     function insertpromo(Request $request){
         $cekpromo = PromoModel::All()->where('nama_promo',$request->input('promocode'));

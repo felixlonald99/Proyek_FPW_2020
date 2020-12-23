@@ -16,8 +16,6 @@ Route::get('/','ControllerHalaman@loginPage');
 Route::get('/home','ControllerHalaman@homePage');
 Route::get('/login','ControllerHalaman@loginPage');
 Route::get('/register','ControllerHalaman@registerPage');
-Route::get('/detail','ControllerHalaman@detailPage');
-Route::get('/admin','ControllerHalaman@adminPage');
 Route::post('/prosesRegister','ControllerHalaman@prosesRegister');
 Route::post('/prosesLogin','ControllerHalaman@prosesLogin');
 Route::get('/promocode','ControllerHalaman@promocode');
@@ -54,7 +52,6 @@ Route::get('/admin','AdminController@adminpage');
 Route::post('/dologinadmin','AdminController@dologinadmin');
 Route::get('/adminlogout','AdminController@adminlogout');
 
-
 Route::get('/masteruserpage','AdminController@masteruserpage');
 Route::get('/masterbookingpage','AdminController@masterbookingpage');
 Route::get('/masterpromopage','AdminController@masterpromopage');
@@ -64,5 +61,6 @@ Route::get('/addservicepage','AdminController@addservicepage');
 Route::post('/insertpromo','AdminController@insertpromo');
 Route::post('/deletepromo','AdminController@deletepromo');
 Route::post('/insertservice','AdminController@insertservice');
+Route::post('/bookRoom','AdminController@bookRoom');
 
 

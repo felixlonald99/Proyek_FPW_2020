@@ -48,7 +48,6 @@ class ControllerHalaman extends Controller
         $tipe = [];
         $ctrkosong = 0;
 
-
         foreach($room as $item){
             $i++;
             $tipe[$i] =$item->roomtype_capacity;
@@ -359,8 +358,11 @@ class ControllerHalaman extends Controller
         $tipe4 = $request->input('tipe4');
         $tipe5 = $request->input('tipe5');
         $nights = $request->input('nights');
-        $rooms = intval($request->input('rooms'));
         $totalBookRooms = $tipe1+$tipe2+$tipe3+$tipe4+$tipe5;
+        $checkin = $request->input('checkin');
+
+        $checkinReplace = str_replace('-', '/', $checkin);
+        $checkout = date('Y-m-d',strtotime($checkinReplace . "+".$nights." days"));
 
         for ($i=0; $i < $totalBookRooms; $i++) {
             $getBookingNumber = DB::table('booking')->select('*')->get();
@@ -398,7 +400,9 @@ class ControllerHalaman extends Controller
                 'guest_name' => $getGuest[0]->name,
                 'roomtype_id' => $roomTipe,
                 'roomtype_name' => $getRoom[0]->roomtype_name,
-                'room_number' => $getRoomNumber[0]->room_number,
+                'room_number' => 0,
+                'check_in' => $checkin,
+                'check_out' => $checkout,
                 'nights' => $nights,
                 'total_price' => $nights*$getRoom[0]->roomtype_price,
                 'booking_status' => 0,
@@ -411,41 +415,16 @@ class ControllerHalaman extends Controller
                 'invoice_number' => count($getInvoice)+1,
                 'booking_number' => count($getBookingNumber)+1,
                 'guest_email' => $getGuest[0]->email,
-                'total_price' => $nights*$getRoom[0]->roomtype_price,
+                'total_price' => 0,
                 'payment_status' => 0
             ];
             DB::table('invoice')->insert($data);
         }
 
-
         $getBooking = DB::table('booking')->select('*')->where('guest_email',$getGuest[0]->email)->get();
         return view('components.history',['datas'=>$getBooking]);
     }
 
-    function tambahPenginapan(Request $request){
-        $rules = [
-            'tipe' => 'required ',
-            'harga' => 'required',
-            'info' => 'required',
-        ];
-        $customError = [
-            'required' => 'Harus di isi ! '
-        ];
-
-        $this->validate($request,$rules,$customError);
-
-        $tipe = $request->input('tipe');
-        $harga = $request->input('harga');
-        $detail = $request->input('info');
-        // $room = new RoomType;
-        // // $room->id = 1;
-        // $room->tipe_kamar = $tipe;
-        // $room->harga_kamar = $harga;
-        // $room->foto_kamar = "";
-        // $room->detail_kamar = $detail;
-        // $room->save();
-        return view('components.admin');
-    }
     function historyPage(Request $request){
         $data = DB::table('booking')->get();
         return view('components.history',["datas"=>$data]);

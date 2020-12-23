@@ -48,6 +48,7 @@
             @endif
 
             <input type="hidden" name="nights" value="{{$night}}">
+            <input type="hidden" name="checkin" value="{{$checkin}}">
             <input type="hidden" name="rooms" value="{{$room}}">
 
             <div class="row">
