@@ -19,7 +19,7 @@ class CheckUserLogin
         $cookieLogin = json_decode($cookie,true);
 
         if (!$cookieLogin){
-            return redirect('/home')->with('message', 'Login Terlebih dahulu');
+            return redirect('/login')->with('message', 'Login Terlebih dahulu');
         }
         return $next($request);
     }
