@@ -28,7 +28,6 @@
                                     <th>Phone</th>
                                     <th>Birthdate</th>
                                     <th>Join Date</th>
-                                    <th>Books</th>
 
                                 </tr>
                                 @foreach ($listusers as $user)
@@ -42,7 +41,6 @@
                                         $joinDate = date("l, d M Y", strtotime($user->created_at));
                                         echo "<td>".$joinDate."</td>";
                                     ?>
-                                    <td>--ctr--</td>
                                 </tr>
                                 @endforeach
                                 </tbody>
