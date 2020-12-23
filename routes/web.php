@@ -52,38 +52,35 @@ Route::get('/admin','AdminController@adminpage');
 Route::post('/dologinadmin','AdminController@dologinadmin');
 Route::get('/adminlogout','AdminController@adminlogout');
 
-//=== page navigation ===
-Route::get('/masteruserpage','AdminController@masteruserpage');
-Route::get('/masterbookingpage','AdminController@masterbookingpage');
-Route::get('/masterpromopage','AdminController@masterpromopage');
-Route::get('/addnewbookingpage','AdminController@addnewbookingpage');
-Route::get('/addservicepage','AdminController@addservicepage');
-Route::get('/detailbooking','AdminController@detailbooking');
-Route::get('/bookedroompage','AdminController@bookedroompage');
-Route::get('/invoice','AdminController@invoice');
+Route::group(['middleware' => ['CheckAdminRole']], function () {
+    //=== page navigation ===
+    Route::get('/masteruserpage','AdminController@masteruserpage');
+    Route::get('/masterbookingpage','AdminController@masterbookingpage');
+    Route::get('/masterpromopage','AdminController@masterpromopage');
+    Route::get('/addnewbookingpage','AdminController@addnewbookingpage');
+    Route::get('/addservicepage','AdminController@addservicepage');
+    Route::get('/detailbooking','AdminController@detailbooking');
+    Route::get('/bookedroompage','AdminController@bookedroompage');
+    Route::get('/invoice','AdminController@invoice');
 
-Route::post('/insertpromo','AdminController@insertpromo');
-Route::post('/deletepromo','AdminController@deletepromo');
-Route::post('/insertservice','AdminController@insertservice');
-Route::post('/bookRoom','AdminController@bookRoom');
+    Route::post('/insertpromo','AdminController@insertpromo');
+    Route::post('/deletepromo','AdminController@deletepromo');
+    Route::post('/insertservice','AdminController@insertservice');
+    Route::post('/bookRoom','AdminController@bookRoom');
 
-//=== detail booking ===
-Route::post('/changepaymentstatus','AdminController@changepaymentstatus');
-Route::post('/assignroom','AdminController@assignroom');
-Route::post('/setbookingpending','AdminController@setbookingpending');
-Route::post('/setbookingcheckedin','AdminController@setbookingcheckedin');
-Route::post('/setbookingcheckedout','AdminController@setbookingcheckedout');
+    //=== detail booking ===
+    Route::post('/changepaymentstatus','AdminController@changepaymentstatus');
+    Route::post('/assignroom','AdminController@assignroom');
+    Route::post('/setbookingpending','AdminController@setbookingpending');
+    Route::post('/setbookingcheckedin','AdminController@setbookingcheckedin');
+    Route::post('/setbookingcheckedout','AdminController@setbookingcheckedout');
 
-//=== filter master booking ===
-Route::get('/filterpaymentpending','AdminController@filterpaymentpending');
-Route::get('/filterpaymentpaid','AdminController@filterpaymentpaid');
-Route::get('/filterstatuspending','AdminController@filterstatuspending');
-Route::get('/filterstatuscheckedin','AdminController@filterstatuscheckedin');
-Route::get('/filterstatuscheckedout','AdminController@filterstatuscheckedout');
+    //=== filter master booking ===
+    Route::get('/filterpaymentpending','AdminController@filterpaymentpending');
+    Route::get('/filterpaymentpaid','AdminController@filterpaymentpaid');
+    Route::get('/filterstatuspending','AdminController@filterstatuspending');
+    Route::get('/filterstatuscheckedin','AdminController@filterstatuscheckedin');
+    Route::get('/filterstatuscheckedout','AdminController@filterstatuscheckedout');
 
-Route::post('/filtertanggal','AdminController@filtertanggal');
-
-
-
-
-
+    Route::post('/filtertanggal','AdminController@filtertanggal');
+});
