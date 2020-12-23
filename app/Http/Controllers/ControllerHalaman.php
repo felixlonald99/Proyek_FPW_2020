@@ -12,6 +12,7 @@ use App\BookingModel;
 use App\Room;
 use App\RoomType;
 use App\Guest;
+use App\GuestModel;
 use App\PromoModel;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
@@ -251,8 +252,8 @@ class ControllerHalaman extends Controller
 
     function prosesRegister(Request $request){
         $rules = [
-            'fullname' => 'required | max:24',
-            'phone' => 'required | min:10',
+            'fullname' => 'required |alpha| max:24',
+            'phone' => 'required | numeric |min:10',
             'password' => ['required','min:8','max:12','confirmed', new cekPassword],
             'email' => ['required', new cekEmail],
         ];
@@ -260,7 +261,7 @@ class ControllerHalaman extends Controller
         $customError = [
             'required' => 'Harus di isi ! ',
             'numeric' => 'Harus berupa angka saja!',
-            'alpha_num' => 'Harus alphanumeric!',
+            'alpha' => 'Nama tidak boleh mengandung angka!',
         ];
 
         $this->validate($request,$rules,$customError);
@@ -269,19 +270,26 @@ class ControllerHalaman extends Controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $password = $request->input('password');
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $day = $request->input('day');
 
         $checkEmail = DB::table('guest')->select('*')->where('email',$email)->get();
         $checkphone = DB::table('guest')->select('*')->where('phone',$phone)->get();
 
+
         if(count($checkEmail)==0 && count($checkphone)==0){
-            $data = [
-                'name' => $nama,
-                'email' => $email,
-                'phone' => $phone,
-                'password' => $password,
-                'status' => 0
-            ];
-            DB::table('guest')->insert($data);
+            $guest = new GuestModel();
+
+            $guest->name = $nama;
+            $guest->email = $email;
+            $guest->phone = $phone;
+            $guest->password = $password;
+            $guest->saldo = 0;
+            $guest->status = 0;
+            $guest->birthdate = $year."-".$month."-".$day;
+            $guest->save();
+
             return view('components.login');
         }
         else if(count($checkEmail)>0){
@@ -368,7 +376,7 @@ class ControllerHalaman extends Controller
         ]);
     }
 
-    function bookRoom(Request $request){
+    function bookRoomGuest(Request $request){
         $getGuest = DB::table('guest')->select('*')->where('status',1)->get();
         $tipe1 = $request->input('tipe1');
         $tipe2 = $request->input('tipe2');
@@ -412,21 +420,22 @@ class ControllerHalaman extends Controller
             $getRoom = DB::table('roomtype')->select('*')->where('roomtype_id',$roomTipe)->get();
             $getRoomNumber = DB::table('room')->select('*')->where('roomtype_id',$roomTipe)->where('room_status',0)->get();
 
-            $data = [
-                'booking_number' => count($getBookingNumber)+1,
-                'guest_email' => $getGuest[0]->email,
-                'guest_name' => $getGuest[0]->name,
-                'roomtype_id' => $roomTipe,
-                'roomtype_name' => $getRoom[0]->roomtype_name,
-                'room_number' => 0,
-                'check_in' => $checkin,
-                'check_out' => $checkout,
-                'nights' => $nights,
-                'total_price' => $nights*$getRoom[0]->roomtype_price,
-                'booking_status' => 0,
-                'payment_status' => 0
-            ];
-            DB::table('booking')->insert($data);
+            $booking = new BookingModel();
+
+            $booking->booking_number = count($getBookingNumber)+1;
+            $booking->guest_email = $getGuest[0]->email;
+            $booking->guest_name = $getGuest[0]->name;
+            $booking->roomtype_id = $roomTipe;
+            $booking->roomtype_name = $getRoom[0]->roomtype_name;
+            $booking->room_number = 0;
+            $booking->check_in = $checkin;
+            $booking->check_out = $checkout;
+            $booking->nights = $nights;
+            $booking->total_price = $nights*$getRoom[0]->roomtype_price;
+            $booking->booking_status = 0;
+            $booking->payment_status = 0;
+            $booking->save();
+
             DB::table('room')->where('room_number',$getRoomNumber[0]->room_number)->update(['room_status'=>1]);
 
             $data = [
@@ -444,8 +453,9 @@ class ControllerHalaman extends Controller
     }
 
     function historyPage(Request $request){
-        $data = DB::table('booking')->get();
-        return view('components.history',["datas"=>$data]);
+        $getGuest = DB::table('guest')->select('*')->where('status',1)->get();
+        $getBooking = DB::table('booking')->select('*')->where('guest_email',$getGuest[0]->email)->get();
+        return view('components.history',['datas'=>$getBooking]);
     }
     function cancelbook(Request $request,$booking_number){
         DB::table('booking')

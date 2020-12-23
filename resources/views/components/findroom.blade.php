@@ -9,7 +9,7 @@
 
 <table class="table">
     @if($ctrkosong == 0)
-        <form method="post" action="{{ url('/bookRoom') }}">
+        <form method="post" action="{{ url('/bookRoomGuest') }}">
             @csrf
             @if($tipe[1] >= $room)
                 <tr>

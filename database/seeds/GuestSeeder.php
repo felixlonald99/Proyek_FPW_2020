@@ -15,9 +15,9 @@ class GuestSeeder extends Seeder
         factory(App\GuestModel::class, 20)->create();
         $guest = new GuestModel();
         $guest->email = "guest@guest.com";
-        $guest->name = "";
+        $guest->name = "guest";
         $guest->phone = 1234567890;
-        $guest->password = "";
+        $guest->password = "guest";
         $guest->saldo = 0;
         $guest->status = 0;
         $guest->birthdate = "1500-08-19";

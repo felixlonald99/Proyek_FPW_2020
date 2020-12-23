@@ -33,15 +33,15 @@
                             <div class="alert alert-danger">{{$message}}</div>
                             @enderror<br>
                             Room tipe 1 :
-                            <input type="number" name="tipe1" style="width: 500px;" class="form-control" min="0" required>
+                            <input type="number" name="tipe1" style="width: 500px;" class="form-control" value=0 min="0" required>
                             Room tipe 2 :
-                            <input type="number" name="tipe2" style="width: 500px;" class="form-control" min="0" required>
+                            <input type="number" name="tipe2" style="width: 500px;" class="form-control" value=0 min="0" required>
                             Room tipe 3 :
-                            <input type="number" name="tipe3" style="width: 500px;" class="form-control" min="0" required>
+                            <input type="number" name="tipe3" style="width: 500px;" class="form-control" value=0 min="0" required>
                             Room tipe 4 :
-                            <input type="number" name="tipe4" style="width: 500px;" class="form-control" min="0" required>
+                            <input type="number" name="tipe4" style="width: 500px;" class="form-control" value=0 min="0" required>
                             Room tipe 5 :
-                            <input type="number" name="tipe5" style="width: 500px;" class="form-control" min="0" required>
+                            <input type="number" name="tipe5" style="width: 500px;" class="form-control" value=0 min="0" required>
                             Night :
                             <input type="number" name="night" style="width: 500px;" class="form-control" min="1" max="10" required>
                             <br>

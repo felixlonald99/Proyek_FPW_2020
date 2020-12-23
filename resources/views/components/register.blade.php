@@ -46,32 +46,51 @@
             <form method = "POST" action="{{ url('/prosesRegister') }}">
                 @csrf
 
+
                 <div id="fullnameInput">
                     <input type="text" class="form-control" name="fullname" placeholder="Full Name"  >
                 </div>
                 @error('fullname')
-                    <div style="color:red; font-weight:bold;position: absolute;left:80%;top:20.5%;font-size:14px"> <<< {{$message}}</div>
+                    <div class="alert alert-danger" style="font-size: 12px">^ {{$message}}</div>
                 @enderror
-
+                <div id="datebirth">
+                    <div class="row">
+                        <div class="col">
+                            <input type="number" class="form-control" name="year" min="1900" max="2020" placeholder="Birth Year" required >
+                        </div>
+                        <div class="col">
+                            <input type="number" class="form-control" name="month" min="1" max="12" placeholder="Birth Month" required >
+                        </div>
+                        <div class="col">
+                            <input type="number" class="form-control" name="day" min="1" max="31" placeholder="Birth Day"  required>
+                        </div>
+                    </div>
+                </div>
                 <div id="emailInput">
                     <input type="text" class="form-control" name="email" placeholder="Email"  >
                 </div>
                 @error('email')
-                    <div style="color:red; font-weight:bold;position:absolute;left:77%;top:41%;font-size:14px;width:200px;" > <<< {{$message}}</div>
+                    <div class="alert alert-danger" style="font-size: 12px">^ {{$message}}</div>
                 @enderror
+                @isset($errorEmail)
+                    <div class="alert alert-danger" style="font-size: 12px">^ {{$errorEmail}}</div>
+                @endisset
 
                 <div id="phoneInput">
                     <input type="text" class="form-control" name="phone" placeholder="Phone (+628 . . . )"   >
                 </div>
                 @error('phone')
-                    <div style="color:red; font-weight:bold;position:absolute;left:77%;top:32%;font-size:14px;width:200px;" > <<< {{$message}}</div>
+                    <div class="alert alert-danger" style="font-size: 12px">^ {{$message}}</div>
                 @enderror
+                @isset($errorNoHP)
+                    <div class="alert alert-danger" style="font-size: 12px">^ {{$errorNoHP}}</div>
+                @endisset
 
                 <div id="passwordInput">
                     <input type="password" class="form-control" name="password" placeholder="Password"  >
                 </div>
                 @error('password')
-                    <div style="color:red; font-weight:bold;position:absolute;left:75%;top:51%;font-size:14px" > <<< {{$message}}</div>
+                    <div class="alert alert-danger" style="font-size: 12px">^ {{$message}}</div>
                 @enderror
 
                 <div id="confirmPasswordInput">
@@ -80,14 +99,6 @@
 
                 <br>
                 <button class="btn btn-primary" style="background-color:#ee5057;">Register</button>
-
-                @isset($errorEmail)
-                <div style="color:red; font-weight:bold;position:absolute;left:80%;top:41%;font-size:14px" > <<< {{$errorEmail}}</div>
-                @endisset
-
-                @isset($errorNoHP)
-                <div style="color:red; font-weight:bold;position:absolute;left:80%;top:32%;font-size:14px" > <<< {{$errorNoHP}}</div>
-                @endisset
             </form>
             <br>
             <div id="loginText">Already have an ID? <a href="http://localhost:8000/login">Login</a></div>
