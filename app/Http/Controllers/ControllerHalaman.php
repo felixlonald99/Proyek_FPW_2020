@@ -95,6 +95,8 @@ class ControllerHalaman extends Controller
             }
 
             //isi room capacity
+
+        }
             $cap = [];
             for($i = 0; $i <= 5; $i++ ){
                 $cap[$i] = 0;
@@ -106,7 +108,7 @@ class ControllerHalaman extends Controller
                     $cap[$i] = $item->roomtype_capacity;
                 }
             }
-        }
+
         return view('components.findroom',[
             "tipe" => $tipe,
             "room" => $request->input('room'),
