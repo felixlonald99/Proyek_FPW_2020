@@ -155,21 +155,21 @@ class AdminController extends Controller
             $getRoom = DB::table('roomtype')->select('*')->where('roomtype_id',$roomTipe)->get();
             $getRoomNumber = DB::table('room')->select('*')->where('roomtype_id',$roomTipe)->where('room_status',0)->get();
 
-            $data = [
-                'booking_number' => count($getBookingNumber)+1,
-                'guest_email' => $emailGuest,
-                'guest_name' => $namaGuest,
-                'roomtype_id' => $roomTipe,
-                'roomtype_name' => $getRoom[0]->roomtype_name,
-                'room_number' => 0,
-                'check_in' => $checkin,
-                'check_out' => $checkout,
-                'nights' => $nights,
-                'total_price' => $nights*$getRoom[0]->roomtype_price,
-                'booking_status' => 0,
-                'payment_status' => 0
-            ];
-            DB::table('booking')->insert($data);
+            $booking = new BookingModel();
+            $booking->booking_number = count($getBookingNumber)+1;
+            $booking->guest_email = $emailGuest;
+            $booking->guest_name = $namaGuest;
+            $booking->roomtype_id = $roomTipe;
+            $booking->roomtype_name = $getRoom[0]->roomtype_name;
+            $booking->room_number = 0;
+            $booking->check_in = $checkin;
+            $booking->check_out = $checkout;
+            $booking->nights = $nights;
+            $booking->total_price = $nights*$getRoom[0]->roomtype_price;
+            $booking->booking_status = 0;
+            $booking->payment_status = 0;
+            $booking->save();
+
             DB::table('room')->where('room_number',$getRoomNumber[0]->room_number)->update(['room_status'=>1]);
 
             $data = [

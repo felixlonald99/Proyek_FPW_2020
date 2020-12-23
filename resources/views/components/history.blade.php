@@ -10,7 +10,6 @@
     <tr>
         <td>Booking Number</td>
         <td>Guest Name</td>
-        <td>Total Guest</td>
         <td>Room Type</td>
         <td>Total Price</td>
         <td>Booking Status</td>
@@ -20,7 +19,6 @@
     <tr>
         <td>{{$item->booking_number}}</td>
         <td>{{$item->guest_name}}</td>
-        <td>{{$item->total_guest}}</td>
         <td>{{$item->roomtype_name}}</td>
         <td>{{$item->total_price}}</td>
         <td>

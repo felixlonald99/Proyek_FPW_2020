@@ -31,7 +31,7 @@ Route::group(['middleware' => ['CheckUserLogin']], function () {
     Route::post('/tambahPenginapan','ControllerHalaman@tambahPenginapan');
     Route::post('/topup','ControllerHalaman@topup');
     Route::post('/book','ControllerHalaman@book');
-    Route::post('/bookRoom','ControllerHalaman@bookRoom');
+    Route::post('/bookRoomGuest','ControllerHalaman@bookRoomGuest');
     Route::get('detailPage/{nama}','ControllerHalaman@detailPage');
 
     Route::get('/checkout/{booking_number?}','CheckoutController@checkout');
