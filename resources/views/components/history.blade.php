@@ -13,6 +13,7 @@
         <td>Room Type</td>
         <td>Total Price</td>
         <td>Booking Status</td>
+        <td>Payment Status</td>
         <td>Action</td>
     </tr>
     @foreach ($datas as $item)
@@ -28,14 +29,27 @@
                 @if ($item->booking_status == -1)
                     <span class="badge badge-danger">CANCELED</span></center>
                 @else
-                    @if ($item->payment_status == 1)
-                    <span class="badge badge-success">SUCCESS</span></center>
+                    @if ($item->booking_status == 1)
+                    <span class="badge badge-success">CHECKED IN</span></center>
                     @endif
                 @endif
             @endif
         </td>
         <td>
-            @if ($item->booking_status==0)
+            @if ($item->payment_status == 0)
+                <span class="badge badge-warning">PENDING</span></center>
+            @else
+                @if ($item->payment_status == -1)
+                    <span class="badge badge-danger">CANCELED</span></center>
+                @else
+                    @if ($item->payment_status == 1)
+                    <span class="badge badge-success">PAID</span></center>
+                    @endif
+                @endif
+            @endif
+        </td>
+        <td>
+            @if ($item->payment_status==0)
             <form action="/paywith" method="post">
                 @csrf
                 <input type="hidden" value="{{$item->booking_number}}" name="booknum">

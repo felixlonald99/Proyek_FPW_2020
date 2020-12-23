@@ -178,7 +178,6 @@ class ControllerHalaman extends Controller
     function paycash(Request $request){
         DB::table('booking')->where('booking_number',$request->input('booknum'))->update([
             'payment_status'=> 1,
-            'booking_status'=>1
         ]);
 
         return redirect("/history");
@@ -461,7 +460,7 @@ class ControllerHalaman extends Controller
     function cancelbook(Request $request,$booking_number){
         DB::table('booking')
         ->where('booking_number',$booking_number)
-        ->update(['booking_status'=>-1]);
+        ->update(['booking_status'=>-1,'payment_status'=>-1]);
         return redirect("/history");
     }
 
