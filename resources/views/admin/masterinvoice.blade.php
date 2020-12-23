@@ -11,48 +11,47 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1><b><p id="time"></p></b></h1>
         </section>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
         <section class="content">
             <div class="row">
 
-                {{-- /////////////////////////////////////////// --}}
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <!-- box md 6-->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h1 class="box-title"><h1>INVOICE TABLE</h1>
+                            <h1>INVOICE TABLE</h1>
                         </div>
                     <!-- /.box-header -->
                         <div class="box-body">
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th>Promo Code</th>
-                                        <th>Nominal Discount</th>
-                                        <th>Minimal Transaction</th>
+                                        <th>Invoice Number</th>
+                                        <th>Guest Email</th>
+                                        <th>Total Price</th>
+                                        <th>Payment Method</th>
+                                        <th>Payment Status</th>
                                         <th>Action</th>
                                      </tr>
 
-                                    @isset($promo)
-                                        @foreach ($promo as $item)
+                                    @isset($invoice)
+                                        @foreach ($invoice as $item)
                                             <tr>
-                                                <td>{{$item->nama_promo}}</td>
+                                                <td>{{$item->invoice_number}}</td>
+                                                <td>{{$item->guest_email}}</td>
                                                 <?php
-                                                    $formatHarga = number_format($item->nominal_potongan,0,',','.');
+                                                    $formatHarga = number_format($item->total_price,0,',','.');
                                                 ?>
                                                 <td>Rp. {{ $formatHarga }}</td>
-                                                <?php
-                                                    $formatHarga = number_format($item->minimal_transaksi,0,',','.');
-                                                ?>
-                                                <td>Rp. {{ $formatHarga }}</td>
+                                                <td>{{$item->payment_method}}</td>
+                                                <td>{{$item->payment_status}}</td>
                                                 <td>
-                                                    <form method="post" action="{{url('/deletepromo')}}">
+                                                    <form method="post" action="/detailinvoice">
                                                         @csrf
-                                                        <input type="hidden" name="idDelete" value= "{{$item->nama_promo}}">
-                                                        <button class="btn btn-danger form-control">Delete</button>
+                                                        <input type="hidden" name="invoicenumber" value= "{{$item->invoice_number}}">
+                                                        <button class="btn btn-info form-control">Detail</button>
                                                     </form>
                                                 </td>
                                             </tr>
