@@ -93,21 +93,20 @@ class ControllerHalaman extends Controller
             if($ctr == 5){
                 $ctrkosong = 1;
             }
-
-            //isi room capacity
-
         }
-            $cap = [];
-            for($i = 0; $i <= 5; $i++ ){
-                $cap[$i] = 0;
-            }
 
-            for($i = 1; $i <= 5; $i++){
-                $roomcap = DB::table('roomtype')->select('*')->where("roomtype_id",$i)->get();
-                foreach($roomcap as $item){
-                    $cap[$i] = $item->roomtype_capacity;
-                }
+        //isi room capacity
+        $cap = [];
+        for($i = 0; $i <= 5; $i++ ){
+            $cap[$i] = 0;
+        }
+
+        for($i = 1; $i <= 5; $i++){
+            $roomcap = DB::table('roomtype')->select('*')->where("roomtype_id",$i)->get();
+            foreach($roomcap as $item){
+                $cap[$i] = $item->roomtype_capacity;
             }
+        }
 
         return view('components.findroom',[
             "tipe" => $tipe,
