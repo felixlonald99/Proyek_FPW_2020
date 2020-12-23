@@ -39,7 +39,7 @@ class CheckoutController extends Controller
     {
         DB::table('booking')
         ->where('booking_number',$booking_number)
-        ->update(['booking_status'=>1,'payment_status'=>1,'payment_method'=>"MIDTRANS"]);
+        ->update(['payment_status'=>1,'payment_method'=>"MIDTRANS"]);
         return redirect("/history");
     }
 }
