@@ -65,7 +65,10 @@ Route::post('/insertservice','AdminController@insertservice');
 Route::post('/bookRoom','AdminController@bookRoom');
 
 Route::post('/changepaymentstatus','AdminController@changepaymentstatus');
-
+Route::post('/assignroom','AdminController@assignroom');
+Route::post('/setbookingpending','AdminController@setbookingpending');
+Route::post('/setbookingcheckedin','AdminController@setbookingcheckedin');
+Route::post('/setbookingcheckedout','AdminController@setbookingcheckedout');
 
 
 

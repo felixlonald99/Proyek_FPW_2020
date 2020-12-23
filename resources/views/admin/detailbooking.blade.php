@@ -15,6 +15,7 @@
                             <h3 class="box-title"><b>BOOKING #{{ $data->booking_number }} DETAIL</b></h3>
                         </div>
                     <!-- /.box-header -->
+
                         <div class="box-body">
                             <div class="table-responsive">
                                 <table class="table">
@@ -30,6 +31,13 @@
                                         <tr>
                                             <th>Room Type</th>
                                             <td>{{ $data->roomtype_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Price</th>
+                                            <?php
+                                            $formatHarga = number_format($data->total_price,0,',','.');
+                                            ?>
+                                            <td>Rp. {{ $formatHarga }}</td>
                                         </tr>
                                         <tr>
                                             <th>Payment Status</th>
@@ -48,14 +56,14 @@
                                                         @csrf
                                                         <input type="hidden" name="booking_number" value="{{$data->booking_number}}">
                                                         <input type="hidden" name="payment_status" value="{{$data->payment_status}}">
-                                                        <button type="submit" class="btn btn-block btn-sm btn-info">CHANGE STATUS</button>
-                                                    </form>
+                                                        <button type="submit" class="btn btn-block btn-sm btn-info">UPDATE PAYMENT & STATUS</button>
                                                 </td>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Payment Method</th>
                                             <td><input type='text' value='{{$data->payment_method}}' class='form-control' id='paymentmethod' name='paymentmethod'></td>
+                                                    </form>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -80,17 +88,26 @@
                                             <th>Booked At</th>
                                             <td>{{ $data->created_at }}</td>
                                         </tr>
+                                        @if (session('status'))
+                                            <div class="alert alert-danger">
+                                                {{ session('status') }}
+                                            </div>
+                                        @endif
                                         <tr>
                                             <th>Room Number</th>
                                             <td>
-                                                <select class='form-control' id='roomnumber' name='roomnumber'>
-                                                    @foreach ($room as $room)
-                                                        <option value="{{$room}}">{{$room}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <td>
-                                                    <button type="submit" class="btn btn-block btn-sm btn-info">ASSIGN ROOM</button>
-                                                </td>
+                                                <form action="/assignroom" method="POST">
+                                                        @csrf
+                                                    <input type="hidden" name="booking_number" value="{{$data->booking_number}}">
+                                                    <select class='form-control' id='roomnumber' name='roomnumber'>
+                                                        @foreach ($room as $room)
+                                                            <option value="{{$room}}">{{$room}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-block btn-sm btn-info">ASSIGN ROOM</button>
+                                                    </td>
+                                                </form>
                                             </td>
                                         </tr>
                                         <tr>
@@ -113,31 +130,41 @@
                                 </table>
                             </div>
                             <div class="col-md-4">
-                                <form action="/managebooking" method="get">
-                                    <button type="submit" class="btn btn-block btn-info">BACK</button>
+                                <form action="/setbookingpending" method="post">
+                                    <input type="hidden" name="booking_number" value="{{$data->booking_number}}">
+                                    <button type="submit" class="btn btn-block btn-warning">SET PENDING</button>
                                 </form>
                             </div>
                             <div class="col-md-4">
-                                <form action="/reject" method="post">
+                                <form action="/setbookingcheckedin" method="post">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{$data->booking_number}}">
-                                    <button type="submit" class="btn btn-block btn-danger">REJECT</button>
+                                    <input type="hidden" name="booking_number" value="{{$data->booking_number}}">
+                                    <button type="submit" class="btn btn-block btn-success">CHECK IN</button>
                                 </form>
                             </div>
                             <div class="col-md-4">
-                                <form action="/accept" method="post">
+                                <form action="/setbookingcheckedout" method="post">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{$data->booking_number}}">
-                                    <button type="submit" class="btn btn-block btn-success">ACCEPT</button>
+                                    <input type="hidden" name="booking_number" value="{{$data->booking_number}}">
+                                    <button type="submit" class="btn btn-block btn-danger">CHECK OUT</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    function thousands_separators(num)
+                    {
+                    var num_parts = num.toString().split(".");
+                    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    return num_parts.join(".");
+                    }
+                </script>
 
             </div>
         </section>
     </div>
 </body>
+
 
 @endsection

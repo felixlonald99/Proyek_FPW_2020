@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BookedRoomModel;
 use App\BookingModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -192,6 +193,11 @@ class AdminController extends Controller
     function changepaymentstatus(Request $request){
         $bookingnumber = $request->input('booking_number');
         $payment_status = $request->input('payment_status');
+        $payment_method = $request->input('paymentmethod');
+
+        $data = BookingModel::find($bookingnumber);
+        $data->payment_method = $payment_method;
+        $data->save();
 
         if ($payment_status==0) {
             $data = BookingModel::find($bookingnumber);
@@ -202,9 +208,72 @@ class AdminController extends Controller
             $data->payment_status = 0;
             $data->save();
         }
-        return view('admin.detailbooking',[
-            'data'=>$data
-        ]);
+        return back()->withInput();
+    }
+
+    function assignroom(Request $request){ //check in tamu
+        $bookingnumber = $request->input('booking_number');
+        $roomnumber = $request->input('roomnumber');
+
+        $data = BookingModel::find($bookingnumber);
+
+        if ($data->payment_status==0) {
+            return back()->with('status', 'BELUM MELAKUKAN PAYMENT!');
+        }
+
+        $data->room_number = $roomnumber;
+        $data->booking_status = 1;
+        $data->save();
+
+        $bookedroom = new BookedRoomModel();
+        $bookedroom->booking_number = $bookingnumber;
+        $bookedroom->guest_email = $data->guest_email;
+        $bookedroom->guest_name = $data->guest_name;
+        $bookedroom->check_in = $data->check_in;
+        $bookedroom->check_out = $data->check_out;
+        $bookedroom->room_number = $roomnumber;
+        $bookedroom->save();
+
+        return back()->withInput();
+    }
+
+    function setbookingpending(Request $request){
+        $bookingnumber = $request->input('booking_number');
+        $data = BookingModel::find($bookingnumber);
+
+        if ($data->payment_status==0) {
+            return back()->with('status', 'BELUM MELAKUKAN PAYMENT!');
+        }
+
+        $data->booking_status = 0;
+        $data->save();
+        return back()->withInput();
+    }
+
+    function setbookingcheckedin(Request $request){
+        $bookingnumber = $request->input('booking_number');
+        $data = BookingModel::find($bookingnumber);
+
+        if ($data->payment_status==0) {
+            return back()->with('status', 'BELUM MELAKUKAN PAYMENT!');
+        }
+
+        $data->booking_status = 1;
+        $data->save();
+        return back()->withInput();
+    }
+
+    function setbookingcheckedout(Request $request){
+        $bookingnumber = $request->input('booking_number');
+        $data = BookingModel::find($bookingnumber);
+
+        if ($data->payment_status==0) {
+            return back()->with('status', 'BELUM MELAKUKAN PAYMENT!');
+        }
+
+        $data->booking_status = 2;
+        $data->save();
+        return back()->withInput();
     }
 
     function insertpromo(Request $request){

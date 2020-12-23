@@ -100,9 +100,6 @@
 
     @yield('content')
 
-    @if (Session::has('message'))
-      <script>alert(`{{ Session::get('message') }}`)</script>
-    @endif
 
     <footer class="main-footer">
         <strong>Copyright &copy; 2020. HILTON PHOTO STUDIO</a></strong> All rights
