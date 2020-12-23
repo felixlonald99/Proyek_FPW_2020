@@ -14,35 +14,56 @@
             @if($tipe[1] >= $room)
                 <tr>
                     <td><img src="{{ url("/templateweb/img/tipe1.jpeg")}}" style="width:250px;height:170px;"></td>
-                    <td><h1>Single Standard Room</h1><br>Sisa : {{$tipe[1]}} Kamar</td>
+                    <td>
+                        <h1>Single Standard Room</h1>
+                        <br>
+                        Sisa : {{$tipe[1]}} Kamar
+                        <br>
+                        Kapasitas Ruangan : {{$cap[1]}}
+                    </td>
                     <td>Jumlah yang ingin dipesan<br><input type="number" value="0" id="num1" name="tipe1"></td>
                 </tr>
             @endif
             @if($tipe[2] >= $room)
                 <tr>
                     <td><img src="{{ url("/templateweb/img/tipe2.jpeg")}}" style="width:250px;height:170px;"></td>
-                    <td><h1>Standard Twin Room</h1><br>Sisa : {{$tipe[2]}} Kamar</td>
+                    <td>
+                        <h1>Standard Twin Room</h1>
+                        <br>
+                        Sisa : {{$tipe[2]}} Kamar
+                        <br>
+                        Kapasitas Ruangan : {{$cap[2]}}
+                    </td>
                     <td>Jumlah yang ingin dipesan<br><input type="number" value="0" id="num2" name="tipe2"></td>
                 </tr>
             @endif
             @if($tipe[3] >= $room)
                 <tr>
                     <td><img src="{{ url("/templateweb/img/tipe3.jpeg")}}" style="width:250px;height:170px;"></td>
-                    <td><h1>Deluxe Room</h1><br>Sisa : {{$tipe[3]}} Kamar</td>
+                    <td><h1>Deluxe Room</h1><br>Sisa : {{$tipe[3]}} Kamar
+                    <br>
+                        Kapasitas Ruangan : {{$cap[3]}}
+                    </td>
                     <td>Jumlah yang ingin dipesan<br><input type="number" value="0" id="num3" name="tipe3"></td>
                 </tr>
             @endif
             @if($tipe[4] >= $room)
                 <tr>
                     <td><img src="{{ url("/templateweb/img/tipe4.jpeg")}}" style="width:250px;height:170px;"></td>
-                    <td><h1>Luxury Room</h1><br>Sisa : {{$tipe[4]}} Kamar</td>
+                    <td><h1>Luxury Room</h1><br>Sisa : {{$tipe[4]}} Kamar
+                    <br>
+                        Kapasitas Ruangan : {{$cap[4]}}
+                    </td>
                     <td>Jumlah yang ingin dipesan<br><input type="number" value="0" id="num4" name="tipe4"></td>
                 </tr>
             @endif
             @if($tipe[5] >= $room)
                 <tr>
                     <td><img src="{{ url("/templateweb/img/tipe5.jpeg")}}" style="width:250px;height:170px;"></td>
-                    <td><h1>Family Suite</h1><br>Sisa : {{$tipe[5]}} Kamar</td>
+                    <td><h1>Family Suite</h1><br>Sisa : {{$tipe[5]}} Kamar
+                    <br>
+                        Kapasitas Ruangan : {{$cap[5]}}
+                    </td>
                     <td>Jumlah yang ingin dipesan<br><input type="number" value="0" id="num5" name="tipe5"></td>
                 </tr>
             @endif

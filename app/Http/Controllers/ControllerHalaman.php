@@ -43,14 +43,18 @@ class ControllerHalaman extends Controller
 
     function findRoom(Request $request){
         $check = DB::table('booking')->select('*')->get();
-        $room = DB::table('roomtype')->select('*')->get();
+
         $i = 0;
         $tipe = [];
         $ctrkosong = 0;
 
-        foreach($room as $item){
-            $i++;
-            $tipe[$i] =$item->roomtype_capacity;
+        for($i = 0; $i <= 5; $i++ ){
+            $tipe[$i] = 0;
+        }
+
+        for($i = 1; $i <= 5; $i++ ){
+            $room = DB::table('room')->select('*')->where("roomtype_id",$i)->get();
+            $tipe[$i] = count($room);
         }
 
         foreach($check as $item){
@@ -88,6 +92,19 @@ class ControllerHalaman extends Controller
             if($ctr == 5){
                 $ctrkosong = 1;
             }
+
+            //isi room capacity
+            $cap = [];
+            for($i = 0; $i <= 5; $i++ ){
+                $cap[$i] = 0;
+            }
+
+            for($i = 1; $i <= 5; $i++){
+                $roomcap = DB::table('roomtype')->select('*')->where("roomtype_id",$i)->get();
+                foreach($roomcap as $item){
+                    $cap[$i] = $item->roomtype_capacity;
+                }
+            }
         }
         return view('components.findroom',[
             "tipe" => $tipe,
@@ -95,7 +112,8 @@ class ControllerHalaman extends Controller
             "ctrkosong" => $ctrkosong,
             "night" => $request->input("night"),
             "room" => $request->input("room"),
-            "checkin" =>$request->input("checkin")
+            "checkin" =>$request->input("checkin"),
+            "cap" => $cap
         ]);
 
     }

@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','ControllerHalaman@loginPage');
+Route::get('/','ControllerHalaman@homePage');
 Route::get('/home','ControllerHalaman@homePage');
 Route::get('/login','ControllerHalaman@loginPage');
 Route::get('/register','ControllerHalaman@registerPage');
 Route::post('/prosesRegister','ControllerHalaman@prosesRegister');
 Route::post('/prosesLogin','ControllerHalaman@prosesLogin');
 Route::get('/promocode','ControllerHalaman@promocode');
+Route::get('/findRoompage','ControllerHalaman@findroompage');
+Route::post('/findRoom','ControllerHalaman@findRoom');
 
 
 Route::group(['middleware' => ['CheckUserLogin']], function () {
@@ -38,8 +40,6 @@ Route::group(['middleware' => ['CheckUserLogin']], function () {
     Route::get('/checkout/{booking_number?}/{promo_code?}','CheckoutController@checkout');
     Route::post('checkout/{booking_number?}','CheckoutController@afterpayment')->name('checkout.credit-card');
 
-    Route::get('/findRoompage','ControllerHalaman@findroompage');
-    Route::post('/findRoom','ControllerHalaman@findRoom');
 
     Route::post('/paywith','ControllerHalaman@paywith');
     Route::post('/dopaywith','ControllerHalaman@dopaywith');
